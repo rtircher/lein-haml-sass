@@ -8,6 +8,10 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"
             :distribution :repo}
 
+  :dev-dependencies [[speclj "2.1.1"]
+                     [speclj-growl "1.0.1"]]
+  :test-path "spec/"
+
   :main lein-haml.core
 
   :extra-classpath-dirs ["gems"])
