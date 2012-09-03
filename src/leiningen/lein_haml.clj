@@ -17,9 +17,13 @@
 
 (defn render-all! []
   (doseq [haml-descriptor (haml-dest-files-from "spec/files/multiple" {:dest "spec/files/out"})]
-    (let [dest (:dest haml-descriptor)]
-      (io/make-parents dest)
-      (spit (io/file dest) (render (slurp (:haml haml-descriptor)))))))
+    (let [dest-file (io/file (:dest haml-descriptor))
+          haml-file (io/file (:haml haml-descriptor))]
+      (when (or (not (.exists dest-file))
+                 (> (.lastModified haml-file) (.lastModified dest-file)))
+        (io/make-parents dest-file)
+        (spit dest-file (render (slurp (:haml haml-descriptor))))
+        (println (str "-> " haml-file " compiled to " dest-file))))))
 
 (defn -main [& args]
   (render-all!))
