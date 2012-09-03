@@ -18,13 +18,10 @@
 (defn replace-haml-extension [file new-extension]
   (io/file (clojure.string/replace (.getPath file) (re-pattern #".haml$") (str "." new-extension))))
 
-(defn- normalize-dir [dest-dir]
-  (str dest-dir
-       (when (not (.endsWith dest-dir "/")) "/")))
-
-(defn- replace-dest-dir [file dest-dir]
+(defn- replace-dest-dir [file root-dir dest-dir]
   (if dest-dir
-    (str (normalize-dir dest-dir) (.getName file))
+    (let [rel-file (clojure.string/replace (.getCanonicalPath file) (.getCanonicalPath (io/file root-dir)) "")]
+      (str dest-dir rel-file))
     (.getPath file)))
 
 (defn haml-dest-files-from
@@ -33,5 +30,5 @@
      (let [dest-dir (:dest opts)
            new-ext  (or (:ext opts) default-extension)]
        (map #(hash-map :haml (.getPath %)
-                       :dest (replace-dest-dir (replace-haml-extension % new-ext) dest-dir))
+                       :dest (replace-dest-dir (replace-haml-extension % new-ext) dir dest-dir))
             (haml-files-from dir)))))

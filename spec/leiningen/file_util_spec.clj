@@ -33,7 +33,11 @@
                    (haml-dest-files-from single-file-path)))
 
       (it "returns the dest file path using the specified dest folder"
-          (should= ["other_dest/blah.html"]
+          (should= ["other_dest/blah.html", "other_dest/blah2.html"]
+                   (map :dest (haml-dest-files-from multiple-file-path {:dest "other_dest"}))))
+
+      (it "returns the dest file path keeping the folder hierachy"
+          (should= ["other_dest/haml/blah.html"]
                    (map :dest (haml-dest-files-from single-file-path {:dest "other_dest"}))))
 
       (it "returns the dest file path using the specified dest extension"
@@ -44,6 +48,3 @@
       ))
 
   )
-
-
-;; (run-specs)
