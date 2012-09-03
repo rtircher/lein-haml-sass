@@ -12,6 +12,4 @@
                      [speclj-growl "1.0.1"]]
   :test-path "spec/"
 
-  :main lein-haml.core
-
   :extra-classpath-dirs ["gems"])

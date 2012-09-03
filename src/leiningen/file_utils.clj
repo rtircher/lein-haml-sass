@@ -1,5 +1,6 @@
 (ns leiningen.file-utils
-  (:require [clojure.java.io :as io]))
+  (:require [clojure.java.io :as io]
+            [clojure.string :as string]))
 
 (def ^:private haml-extension "haml")
 (def ^:private default-extension "html")
@@ -16,11 +17,11 @@
     (filter haml-file? fs)))
 
 (defn replace-haml-extension [file new-extension]
-  (io/file (clojure.string/replace (.getPath file) (re-pattern #".haml$") (str "." new-extension))))
+  (io/file (string/replace (.getPath file) (re-pattern #".haml$") (str "." new-extension))))
 
 (defn- replace-dest-dir [file root-dir dest-dir]
   (if dest-dir
-    (let [rel-file (clojure.string/replace (.getCanonicalPath file) (.getCanonicalPath (io/file root-dir)) "")]
+    (let [rel-file (string/replace (.getCanonicalPath file) (.getCanonicalPath (io/file root-dir)) "")]
       (str dest-dir rel-file))
     (.getPath file)))
 
