@@ -1,6 +1,7 @@
 (ns leiningen.haml
   (:use leiningen.lein-haml.file-utils)
   (:require [clojure.java.io :as io]
+            [leiningen.help :as lhelp]
             ;;[leiningen.core.main :as main]
             )
   (:import [org.jruby.embed ScriptingContainer LocalContextScope]))
@@ -49,13 +50,23 @@
   )
 
 ;; Leiningen task
-(defn haml [project subtask & args]
-  (let [options (extract-options project)]
-    (case subtask
-      "once"  (once options)
-      "auto"  (auto options)
-      "clean" (clean options)
-      (task-not-found subtask))))
+(defn haml
+  "Runs the haml compiler plugin."
+  {:help-arglists '([once auto clean])
+   :subtasks [#'once #'auto #'clean]}
+  ([project]
+    (println
+      (lhelp/help-for "haml"))
+    ;; (exit-failure)
+    )
+
+  ([project subtask & args]
+     (let [options (extract-options project)]
+       (case subtask
+         "once"  (once options)
+         "auto"  (auto options)
+         "clean" (clean options)
+         (task-not-found subtask)))))
 
 (defn -main [& args]
   (render-all! "spec/files/multiple" "spec/files/out" nil))

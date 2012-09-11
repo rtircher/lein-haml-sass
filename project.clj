@@ -16,6 +16,12 @@
   :extra-classpath-dirs ["src/gems"]
 
   :eval-in-leiningen true
+
+  ;; Example on how to use lein-haml
+  :haml {
+         :haml-src "spec/files"
+         :output-directory "spec/out"
+         }
   )
 
 ;; Add to local maven repo
