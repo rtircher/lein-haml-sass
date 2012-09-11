@@ -1,6 +1,6 @@
-(ns leiningen.file-util-spec
+(ns leiningen.lein-haml.file-util-spec
   (:use [speclj.core]
-        [leiningen.file-utils])
+        [leiningen.lein-haml.file-utils])
   (:require [clojure.java.io :as io]))
 
 (describe "file-util"

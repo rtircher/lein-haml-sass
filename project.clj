@@ -1,15 +1,22 @@
-(defproject lein-haml "1.0.0-SNAPSHOT"
+(defproject lein-haml "0.0.0-SNAPSHOT"
   :description "HAML autobuilder plugin"
-  :dependencies [[org.clojure/clojure "1.3.0"]
-                 [org.clojure/clojure-contrib "1.2.0"]
-                 [org.jruby/jruby-complete "1.6.4"]]
-
+  :url "https://github.com/rtircher/lein-haml"
   :license {:name "Eclipse Public License - v 1.0"
             :url "http://www.eclipse.org/legal/epl-v10.html"
             :distribution :repo}
+
+  :dependencies [[org.clojure/clojure "1.4.0"]
+                 [org.clojure/clojure-contrib "1.2.0"]
+                 [org.jruby/jruby-complete "1.6.4"]]
 
   :dev-dependencies [[speclj "2.1.1"]
                      [speclj-growl "1.0.1"]]
   :test-path "spec/"
 
-  :extra-classpath-dirs ["gems"])
+  :extra-classpath-dirs ["src/gems"]
+
+  :eval-in-leiningen true
+  )
+
+;; Add to local maven repo
+;; mvn install:install-file -DgroupId=lein-haml -DartifactId=lein-haml -Dversion=0.0.0-SNAPSHOT -Dpackaging=jar -Dfile=/Users/rtircher/Development/lein-haml/lein-haml-0.0.0-SNAPSHOT.jar

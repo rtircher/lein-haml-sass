@@ -1,11 +1,11 @@
-(ns leiningen.lein-haml
-  (:use leiningen.file-utils)
+(ns leiningen.haml
+  (:use leiningen.lein-haml.file-utils)
   (:require [clojure.java.io :as io]
-            ;[leiningen.core.main :as main]
+            ;;[leiningen.core.main :as main]
             )
   (:import [org.jruby.embed ScriptingContainer LocalContextScope]))
 
-(def ^:private c (ScriptingContainer. LocalContextScope/THREADSAFE))
+(def c (ScriptingContainer. LocalContextScope/THREADSAFE))
 (.runScriptlet c "require 'rubygems'; require 'haml'")
 
 (def ^:private engineclass (.runScriptlet c "Haml::Engine"))
