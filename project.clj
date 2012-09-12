@@ -18,9 +18,11 @@
   :eval-in-leiningen true
 
   ;; Example on how to use lein-haml
-  :haml {
-         :haml-src "spec/files"
+  :haml {:haml-src "spec/files"
          :output-directory "spec/out"
+         ;; Other options (provided are default values)
+         ;; :output-extension html
+         ;; :auto-compile-delay 250
          }
   )
 
