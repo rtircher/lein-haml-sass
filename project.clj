@@ -23,6 +23,7 @@
          ;; Other options (provided are default values)
          ;; :output-extension html
          ;; :auto-compile-delay 250
+         ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
          }
   )
 

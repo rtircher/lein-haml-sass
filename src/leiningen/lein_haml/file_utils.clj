@@ -33,3 +33,16 @@
        (map #(hash-map :haml (.getPath %)
                        :dest (replace-dest-dir (replace-haml-extension % new-ext) dir dest-dir))
             (haml-files-from dir)))))
+
+(defn dir-empty? [dir]
+  (not (reduce (fn [memo path] (or memo (.isFile path))) false (file-seq (io/file dir)))))
+
+(defn delete-file! [file]
+  (when (.exists file)
+    (println (str "Deleting: " file))
+    (io/delete-file file)))
+
+(defn delete-directory-recursively! [base-dir]
+  (doseq [file (reverse (file-seq (io/file base-dir)))]
+    (println (str "Deleting: " file))
+    (io/delete-file file)))
