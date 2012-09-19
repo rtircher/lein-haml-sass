@@ -23,6 +23,3 @@
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
          }
   )
-
-;; Add to local maven repo
-;; mvn install:install-file -DgroupId=lein-haml -DartifactId=lein-haml -Dversion=0.0.0-SNAPSHOT -Dpackaging=jar -Dfile=/Users/rtircher/Development/lein-haml/lein-haml-0.0.0-SNAPSHOT.jar
