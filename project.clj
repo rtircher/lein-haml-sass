@@ -6,7 +6,6 @@
             :distribution :repo}
 
   :dependencies [[org.clojure/clojure "1.4.0"]
-                 [org.clojure/clojure-contrib "1.2.0"]
                  [org.jruby/jruby-complete "1.6.4"]]
 
   :dev-dependencies [[speclj "2.1.1"]
