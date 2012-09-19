@@ -36,7 +36,7 @@
   [{:keys [haml-src output-directory output-extension delete-output-dir]}]
   (doseq [haml-descriptor (haml-dest-files-from haml-src {:dest output-directory :ext output-extension})]
     (delete-file! (io/file (:dest haml-descriptor))))
-  (when (and delete-output-dir (dir-empty? output-directory))
+  (when (and delete-output-dir output-directory (dir-empty? output-directory))
     (println (str "Destination folder " output-directory " is empty - Deleting it"))
     (delete-directory-recursively! output-directory)))
 
