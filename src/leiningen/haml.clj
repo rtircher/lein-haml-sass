@@ -19,10 +19,6 @@
 
 
 (defn- render-all! [haml-dir dest-dir dest-extension watch?]
-  (println (java.util.Date.))
-  (println "------------------------------------------------")
-  (println "Ready to compile haml")
-
   (loop []
     (doseq [haml-descriptor (haml-dest-files-from haml-dir {:dest dest-dir :ext dest-extension})]
       (let [dest-file (io/file (:dest haml-descriptor))
@@ -31,7 +27,7 @@
                   (> (.lastModified haml-file) (.lastModified dest-file)))
           (io/make-parents dest-file)
           (spit dest-file (render (slurp (:haml haml-descriptor))))
-          (println (str "    [haml] " haml-file " -> " dest-file )))))
+          (println (str "   [haml] - " (java.util.Date.) " - " haml-file " -> " dest-file )))))
 
     (when watch?
       (Thread/sleep *auto-compile-delay*)
@@ -51,11 +47,15 @@
 (defn- once
   "Compiles the haml files once"
   [{:keys [haml-src output-directory output-extension]}]
+  (println (str "Compiling haml files in " haml-src))
+
   (render-all! haml-src output-directory output-extension false))
 
 (defn- auto
   "Automatically recompiles when files are modified"
   [{:keys [haml-src output-directory output-extension auto-compile-delay]}]
+  (println (str "Ready to compile haml located in " haml-src))
+
   (binding [*auto-compile-delay* (or auto-compile-delay *auto-compile-delay*)]
     (render-all! haml-src output-directory output-extension true)))
 
