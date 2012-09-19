@@ -13,8 +13,6 @@
                      [speclj-growl "1.0.1"]]
   :test-path "spec/"
 
-  :extra-classpath-dirs ["src/gems"]
-
   :eval-in-leiningen true
 
   ;; Example on how to use lein-haml

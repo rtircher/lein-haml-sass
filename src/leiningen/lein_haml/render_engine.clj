@@ -11,13 +11,15 @@
   (when-not @c
     (dosync
      (ref-set c (ScriptingContainer. LocalContextScope/THREADSAFE))
-     (.runScriptlet @c "require 'rubygems'; require 'gems/gems/haml-3.1.7/lib/haml'")
+
+     (def gempath ["gems/gems/haml-3.1.7/lib"])
+     (. @c setLoadPaths gempath)
+     (. @c runScriptlet "require 'rubygems'; require 'haml'")
      (ref-set engineclass (.runScriptlet @c "Haml::Engine")))))
 
 (defn- render [template]
   (let [engine (.callMethod @c @engineclass "new" template Object)]
-    (.callMethod @c engine "render" String))
-  )
+    (.callMethod @c engine "render" String)))
 
 (defn render-all! [{:keys [haml-src output-directory output-extension auto-compile-delay]} watch?]
   (ensure-engine-started!)
@@ -29,7 +31,7 @@
                   (> (.lastModified haml-file) (.lastModified dest-file)))
           (io/make-parents dest-file)
           (spit dest-file (render (slurp (:haml haml-descriptor))))
-          (println (str "   [haml] - " (java.util.Date.) " - " haml-file " -> " dest-file )))))
+          (println (str "   [haml] - " (java.util.Date.) " - " haml-file " -> " dest-file)))))
 
     (when watch?
       (Thread/sleep auto-compile-delay)
