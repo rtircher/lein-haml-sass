@@ -8,6 +8,9 @@ FIXME: write
 
 ## TODO
 
+* use :root of project to make sure we use the correct files
+** remove root from path on display
+** there might be an issue with finding haml files
 * Add hooks
 * Allow the use of a specific haml version if specified in the project.clj config
 * Create some unit tests for the haml tasks
