@@ -46,7 +46,7 @@
 
 ;; Leiningen task
 (defn haml
-  "Runs the haml compiler plugin."
+  "Compiles haml files."
   {:help-arglists '([once auto clean])
    :subtasks [#'once #'auto #'clean]}
   ([project]
