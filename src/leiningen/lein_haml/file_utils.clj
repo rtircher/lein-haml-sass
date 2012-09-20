@@ -34,6 +34,9 @@
                        :dest (replace-dest-dir (replace-haml-extension % new-ext) dir dest-dir))
             (haml-files-from dir)))))
 
+(defn exists [dir]
+  (and dir (.exists (io/file dir))))
+
 (defn dir-empty? [dir]
   (not (reduce (fn [memo path] (or memo (.isFile path))) false (file-seq (io/file dir)))))
 
