@@ -4,6 +4,9 @@
   (:require [clojure.java.io :as io]
             [leiningen.help :as lhelp]
             ;;[leiningen.core.main :as main]
+            [leiningen.clean :as lclean]
+            [leiningen.compile :as lcompile]
+            [robert.hooke :as hooke]
             ))
 
 (defn- normalize-options [options]
@@ -65,4 +68,14 @@
          (task-not-found subtask)))))
 
 
+(defn- compile-hook [task & args]
+  (apply task args)
+  (once (extract-options (first args))))
+
+(defn clean-hook [task & args]
+  (apply task args)
+  (clean (extract-options (first args))))
+
+(hooke/add-hook #'lcompile/compile #'compile-hook)
+(hooke/add-hook #'lclean/clean #'clean-hook)
 ;; do (main/abort errors) on exception

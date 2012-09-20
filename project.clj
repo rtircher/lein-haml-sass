@@ -14,6 +14,9 @@
 
   :eval-in-leiningen true
 
+  ;; Example for adding lein haml hooks
+  :hooks [leiningen.haml]
+
   ;; Example on how to use lein-haml
   :haml {:haml-src "spec/files"
          :output-directory "spec/out"
