@@ -1,20 +1,28 @@
 (ns leiningen.haml
   (:use leiningen.lein-haml.file-utils
         leiningen.lein-haml.render-engine)
-  (:require [clojure.java.io :as io]
-            [leiningen.help :as lhelp]
+  (:require [clojure.java.io   :as io]
+            [leiningen.help    :as lhelp]
             ;;[leiningen.core.main :as main]
-            [leiningen.clean :as lclean]
+            [leiningen.clean   :as lclean]
             [leiningen.compile :as lcompile]
-            [robert.hooke :as hooke]
+            [robert.hooke      :as hooke]
             ))
 
+(def ^:private default-options {:haml-src "resources/haml"
+                                 :output-extension "html"
+                                 :delete-output-dir true
+                                 :auto-compile-delay 250})
+
+(defn- normalize-hooks [options]
+  (let [hooks            (into #{} (:ignore-hooks options))
+        normalized-hooks (if (:compile hooks) (conj hooks :once) hooks)] 
+    (assoc options :ignore-hooks normalized-hooks)))
+
 (defn- normalize-options [options]
-  (merge {:haml-src "resources/haml"
-          :output-extension "html"
-          :delete-output-dir true
-          :auto-compile-delay 250}
-         options))
+  (->> options
+       normalize-hooks
+       (merge default-options)))
 
 (defn- extract-options [project]
   (when (nil? (:haml project))
@@ -68,14 +76,23 @@
          (task-not-found subtask)))))
 
 
-(defn- compile-hook [task & args]
-  (apply task args)
-  (once (extract-options (first args))))
+(defmacro hook [task subtask args]
+  `(let [options# (extract-options (first ~args))]
+    (apply ~task ~args)
 
-(defn clean-hook [task & args]
-  (apply task args)
-  (clean (extract-options (first args))))
+     (when-not (~subtask (:ignore-hooks options#))
+        (~(symbol (name subtask)) options#)
+       )
+))
+
+(defn- compile-hook [task & args]
+  (hook task :once args))
+
+(defn- clean-hook [task & args]
+  (hook task :clean args))
 
 (hooke/add-hook #'lcompile/compile #'compile-hook)
 (hooke/add-hook #'lclean/clean #'clean-hook)
+
+
 ;; do (main/abort errors) on exception
