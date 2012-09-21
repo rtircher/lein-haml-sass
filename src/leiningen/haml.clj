@@ -5,8 +5,7 @@
             [leiningen.help    :as lhelp]
             [leiningen.clean   :as lclean]
             [leiningen.compile :as lcompile]
-            [robert.hooke      :as hooke]
-            ))
+            [robert.hooke      :as hooke]))
 
 (def ^:private default-options {:haml-src "resources/haml"
                                  :output-extension "html"
@@ -27,10 +26,12 @@
 
 (defn- exit-failure
   "Fail in a way that satisifies lein1 and lein2."
-  []
+  [error-msg]
   (if lein2?
-    ((resolve 'leiningen.core.main/abort))
-    1))
+    ((resolve 'leiningen.core.main/abort) error-msg)
+    (do
+      (println error-msg)
+      1)))
 
 (defn- normalize-hooks [options]
   (let [hooks            (into #{} (:ignore-hooks options))
@@ -71,8 +72,7 @@
     (delete-directory-recursively! output-directory)))
 
 (defn- task-not-found [subtask]
-  (println (str "Subtask \"" subtask "\" not found."))
-  (exit-failure))
+  (exit-failure (str "Subtask \"" subtask "\" not found.")))
 
 ;; Leiningen task
 (defn haml
@@ -80,8 +80,7 @@
   {:help-arglists '([once auto clean])
    :subtasks [#'once #'auto #'clean]}
   ([project]
-     (println (lhelp/help-for "haml"))
-     (exit-failure))
+     (exit-failure (lhelp/help-for "haml")))
 
   ([project subtask & args]
      (let [options (extract-options project)]

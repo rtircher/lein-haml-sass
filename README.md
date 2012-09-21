@@ -13,7 +13,7 @@ FIXME: write
 ** there might be an issue with finding haml files
 * Allow the use of a specific haml version if specified in the project.clj config
 * Create some unit tests for the haml tasks
-* add support for lein2
+* add support for lein2 (test it with lein2)
 * extract what could be reused for a lein-sass
 * create some kind of CI to run against different versions of lein
 * Remove all the unnecessary files from the embedded gem (maybe)
