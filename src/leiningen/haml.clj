@@ -3,7 +3,6 @@
         leiningen.lein-haml.render-engine)
   (:require [clojure.java.io   :as io]
             [leiningen.help    :as lhelp]
-            ;;[leiningen.core.main :as main]
             [leiningen.clean   :as lclean]
             [leiningen.compile :as lcompile]
             [robert.hooke      :as hooke]
@@ -13,6 +12,25 @@
                                  :output-extension "html"
                                  :delete-output-dir true
                                  :auto-compile-delay 250})
+
+(def ^:private lein2?
+  (try
+    (require 'leiningen.core.main)
+    true
+    (catch java.io.FileNotFoundException _
+      false)))
+
+(defn- exit-success
+  "Exit successfully in a way that satisifies lein1 and lein2."
+  []
+  (when-not lein2? 0))
+
+(defn- exit-failure
+  "Fail in a way that satisifies lein1 and lein2."
+  []
+  (if lein2?
+    ((resolve 'leiningen.core.main/abort))
+    1))
 
 (defn- normalize-hooks [options]
   (let [hooks            (into #{} (:ignore-hooks options))
@@ -52,9 +70,9 @@
     (println (str "Destination folder " output-directory " is empty - Deleting it"))
     (delete-directory-recursively! output-directory)))
 
-(defn- task-not-found [task]
-  ;; (main/abort (str "Subtask \"" subtask "\" not found."))
-  )
+(defn- task-not-found [subtask]
+  (println (str "Subtask \"" subtask "\" not found."))
+  (exit-failure))
 
 ;; Leiningen task
 (defn haml
@@ -62,10 +80,8 @@
   {:help-arglists '([once auto clean])
    :subtasks [#'once #'auto #'clean]}
   ([project]
-    (println
-      (lhelp/help-for "haml"))
-    ;; (exit-failure)
-    )
+     (println (lhelp/help-for "haml"))
+     (exit-failure))
 
   ([project subtask & args]
      (let [options (extract-options project)]
@@ -76,14 +92,12 @@
          (task-not-found subtask)))))
 
 
+;; Hooks stuffs
 (defmacro hook [task subtask args]
   `(let [options# (extract-options (first ~args))]
-    (apply ~task ~args)
-
+     (apply ~task ~args)
      (when-not (~subtask (:ignore-hooks options#))
-        (~(symbol (name subtask)) options#)
-       )
-))
+       (~(symbol (name subtask)) options#))))
 
 (defn- compile-hook [task & args]
   (hook task :once args))
@@ -93,6 +107,3 @@
 
 (hooke/add-hook #'lcompile/compile #'compile-hook)
 (hooke/add-hook #'lclean/clean #'clean-hook)
-
-
-;; do (main/abort errors) on exception
