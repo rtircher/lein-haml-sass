@@ -1,0 +1,3 @@
+#! /bin/bash
+
+scp -i ~/.leiningen/id_rsa pom.xml $1 clojars@clojars.org:
