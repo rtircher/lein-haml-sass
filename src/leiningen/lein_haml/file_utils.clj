@@ -11,12 +11,12 @@
 (defn- haml-file? [file]
   (and (.isFile file) (ends-with-haml-extension file)))
 
-(defn haml-files-from [dir]
+(defn- haml-files-from [dir]
   (let [f (io/file dir)
         fs (file-seq f)]
     (filter haml-file? fs)))
 
-(defn replace-haml-extension [file new-extension]
+(defn- replace-haml-extension [file new-extension]
   (io/file (string/replace (.getPath file) (re-pattern #".haml$") (str "." new-extension))))
 
 (defn- replace-dest-dir [file root-dir dest-dir]
