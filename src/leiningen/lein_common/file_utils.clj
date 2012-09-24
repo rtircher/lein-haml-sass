@@ -1,4 +1,4 @@
-(ns leiningen.lein-haml.file-utils
+(ns leiningen.lein-common.file-utils
   (:require [clojure.java.io :as io]
             [clojure.string :as string]))
 

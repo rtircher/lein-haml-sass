@@ -1,5 +1,5 @@
 (ns leiningen.lein-haml.render-engine
-  (:use leiningen.lein-haml.file-utils)
+  (:use leiningen.lein-common.file-utils)
   (:require [clojure.java.io :as io])
   (:import [org.jruby.embed ScriptingContainer LocalContextScope]))
 

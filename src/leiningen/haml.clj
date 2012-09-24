@@ -1,5 +1,5 @@
 (ns leiningen.haml
-  (:use leiningen.lein-haml.file-utils
+  (:use leiningen.lein-common.file-utils
         leiningen.lein-haml.render-engine)
   (:require [clojure.java.io   :as io]
             [leiningen.help    :as lhelp]

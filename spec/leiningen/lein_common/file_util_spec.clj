@@ -1,19 +1,20 @@
-(ns leiningen.lein-haml.file-util-spec
+(ns leiningen.lein-common.file-util-spec
   (:use [speclj.core]
-        [leiningen.lein-haml.file-utils])
+        [leiningen.lein-common.file-utils])
   (:require [clojure.java.io :as io]))
 
 (describe "file-util"
 
-  (describe "fn replace-haml-extension"
+  (let [replace-haml-extension #'leiningen.lein-common.file-utils/replace-haml-extension]
 
-    (it "returns the filename with the extension replaced"
-        (let [converted-file (.getPath (replace-haml-extension (io/file "blah.haml") ".html"))]
-          (should (re-matches #".*.html$" converted-file))
-          (should-not (re-matches #".*.haml" converted-file))))
+    (describe "fn replace-haml-extension"
 
+      (it "returns the filename with the extension replaced"
+          (let [converted-file (.getPath (replace-haml-extension (io/file "blah.haml") ".html"))]
+            (should (re-matches #".*.html$" converted-file))
+            (should-not (re-matches #".*.haml" converted-file))))
 
-    )
+    ))
 
   (let [single-file-path "spec/files/single"
         multiple-file-path "spec/files/multiple"]
