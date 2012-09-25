@@ -12,8 +12,8 @@
      (ref-set c (ScriptingContainer. LocalContextScope/THREADSAFE))
 
      (def gempath ["gems/gems/haml-3.1.7/lib"])
-     (. @c setLoadPaths gempath)
-     (. @c runScriptlet "require 'rubygems'; require 'haml'")
+     (.setLoadPaths @c gempath)
+     (.runScriptlet @c "require 'rubygems'; require 'haml'")
      (ref-set engineclass (.runScriptlet @c "Haml::Engine")))))
 
 (defn- render [template]
