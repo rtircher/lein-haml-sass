@@ -24,6 +24,14 @@
       (it "returns false for non haml file"
           (should-not (haml-file? (io/file "spec/files/mulitiple/blah.sass"))))))
 
+  (let [sass-file? #'leiningen.lein-common.file-utils/sass-file?]
+    (describe "fn sass-file?"
+      (it "returns true for a sass file"
+          (should (sass-file? (io/file "spec/files/multiple/blah.sass"))))
+
+      (it "returns false for non haml file"
+          (should-not (sass-file? (io/file "spec/files/mulitiple/blah.haml"))))))
+
   (let [single-file-path     "spec/files/single"
         multiple-file-path   "spec/files/multiple"]
 

@@ -3,10 +3,10 @@
             [clojure.string :as string]))
 
 (defn- ends-with-extension [file ext]
-  (.endsWith (.getName file) (str "." ext)))
+  (and (.isFile file) (.endsWith (.getName file) (str "." ext))))
 
-(defn- haml-file? [file]
-  (and (.isFile file) (ends-with-extension file "haml")))
+(defn- haml-file? [file] (ends-with-extension file "haml"))
+(defn- sass-file? [file] (ends-with-extension file "sass"))
 
 (defn- haml-files-from [dir]
   (let [f (io/file dir)
