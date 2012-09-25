@@ -25,7 +25,8 @@
           (should-not (ends-with-extension (io/file "spec/files/mulitiple/blah.sass") "haml")))))
 
   (let [single-file-path     "spec/files/single"
-        multiple-file-path   "spec/files/multiple"]
+        multiple-file-path   "spec/files/multiple"
+        haml-dest-files-from (partial dest-files-from "haml")]
 
     (describe "fn haml-dest-files-from"
 
