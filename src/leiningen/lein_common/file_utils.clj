@@ -24,8 +24,6 @@
                   :dest (replace-dest-dir (replace-extension % src-ext dest-ext) src-dir dest-dir))
        (files-from src-ext src-dir)))
 
-(def haml-dest-files-from (partial dest-files-from "haml"))
-
 (defn exists [dir]
   (and dir (.exists (io/file dir))))
 

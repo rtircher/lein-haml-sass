@@ -3,6 +3,9 @@
   (:require [clojure.java.io :as io])
   (:import [org.jruby.embed ScriptingContainer LocalContextScope]))
 
+(def ^:private haml-dest-files-from (partial dest-files-from "haml"))
+(def ^:private sass-dest-files-from (partial dest-files-from "sass"))
+
 (def ^:private c (ref nil))
 (def ^:private engineclass (ref nil))
 
@@ -35,3 +38,10 @@
     (when watch?
       (Thread/sleep auto-compile-delay)
       (recur))))
+
+(defn clean-all! [{:keys [haml-src output-directory output-extension delete-output-dir]}]
+  (doseq [haml-descriptor (haml-dest-files-from haml-src output-directory output-extension)]
+    (delete-file! (io/file (:dest haml-descriptor))))
+  (when (and delete-output-dir (exists output-directory) (dir-empty? output-directory))
+    (println (str "Destination folder " output-directory " is empty - Deleting it"))
+    (delete-directory-recursively! output-directory)))
