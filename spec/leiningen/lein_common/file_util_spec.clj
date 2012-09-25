@@ -5,12 +5,12 @@
 
 (describe "file-util"
 
-  (let [replace-haml-extension #'leiningen.lein-common.file-utils/replace-haml-extension]
+  (let [replace-extension #'leiningen.lein-common.file-utils/replace-extension]
 
     (describe "fn replace-haml-extension"
 
       (it "returns the filename with the extension replaced"
-          (let [converted-file (.getPath (replace-haml-extension (io/file "blah.haml") ".html"))]
+          (let [converted-file (.getPath (replace-extension (io/file "blah.haml") "haml" ".html"))]
             (should (re-matches #".*.html$" converted-file))
             (should-not (re-matches #".*.haml" converted-file))))
 

@@ -13,8 +13,8 @@
         fs (file-seq f)]
     (filter haml-file? fs)))
 
-(defn- replace-haml-extension [file new-extension]
-  (io/file (string/replace (.getPath file) (re-pattern #".haml$") (str "." new-extension))))
+(defn- replace-extension [file src-ext dest-ext]
+  (io/file (string/replace (.getPath file) (re-pattern (str "." src-ext "$")) (str "." dest-ext))))
 
 (defn- replace-dest-dir [file root-dir dest-dir]
   (if dest-dir
@@ -24,7 +24,7 @@
 
 (defn dest-files-from [src-ext src-dir dest-dir dest-ext]
   (map #(hash-map (keyword src-ext) (.getPath %)
-                  :dest (replace-dest-dir (replace-haml-extension % dest-ext) src-dir dest-dir))
+                  :dest (replace-dest-dir (replace-extension % src-ext dest-ext) src-dir dest-dir))
        (haml-files-from src-dir)))
 
 (def haml-dest-files-from (partial dest-files-from "haml"))
