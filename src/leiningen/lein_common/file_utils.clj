@@ -5,13 +5,10 @@
 (defn- ends-with-extension [file ext]
   (and (.isFile file) (.endsWith (.getName file) (str "." ext))))
 
-(defn- haml-file? [file] (ends-with-extension file "haml"))
-(defn- sass-file? [file] (ends-with-extension file "sass"))
-
-(defn- haml-files-from [dir]
+(defn- files-from [ext dir]
   (let [f (io/file dir)
         fs (file-seq f)]
-    (filter haml-file? fs)))
+    (filter #(ends-with-extension % ext) fs)))
 
 (defn- replace-extension [file src-ext dest-ext]
   (io/file (string/replace (.getPath file) (re-pattern (str "." src-ext "$")) (str "." dest-ext))))
@@ -25,7 +22,7 @@
 (defn dest-files-from [src-ext src-dir dest-dir dest-ext]
   (map #(hash-map (keyword src-ext) (.getPath %)
                   :dest (replace-dest-dir (replace-extension % src-ext dest-ext) src-dir dest-dir))
-       (haml-files-from src-dir)))
+       (files-from src-ext src-dir)))
 
 (def haml-dest-files-from (partial dest-files-from "haml"))
 

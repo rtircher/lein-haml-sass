@@ -16,21 +16,13 @@
 
     ))
 
-  (let [haml-file? #'leiningen.lein-common.file-utils/haml-file?]
+  (let [ends-with-extension #'leiningen.lein-common.file-utils/ends-with-extension]
     (describe "fn haml-file?"
       (it "returns true for a haml file"
-          (should (haml-file? (io/file "spec/files/multiple/blah.haml"))))
+          (should (ends-with-extension (io/file "spec/files/multiple/blah.haml") "haml")))
 
       (it "returns false for non haml file"
-          (should-not (haml-file? (io/file "spec/files/mulitiple/blah.sass"))))))
-
-  (let [sass-file? #'leiningen.lein-common.file-utils/sass-file?]
-    (describe "fn sass-file?"
-      (it "returns true for a sass file"
-          (should (sass-file? (io/file "spec/files/multiple/blah.sass"))))
-
-      (it "returns false for non haml file"
-          (should-not (sass-file? (io/file "spec/files/mulitiple/blah.haml"))))))
+          (should-not (ends-with-extension (io/file "spec/files/mulitiple/blah.sass") "haml")))))
 
   (let [single-file-path     "spec/files/single"
         multiple-file-path   "spec/files/multiple"]
