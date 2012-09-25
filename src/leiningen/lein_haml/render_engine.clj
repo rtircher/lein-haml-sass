@@ -23,7 +23,7 @@
 (defn render-all! [{:keys [haml-src output-directory output-extension auto-compile-delay]} watch?]
   (ensure-engine-started!)
   (loop []
-    (doseq [haml-descriptor (haml-dest-files-from haml-src {:dest output-directory :ext output-extension})]
+    (doseq [haml-descriptor (haml-dest-files-from haml-src output-directory output-extension)]
       (let [dest-file (io/file (:dest haml-descriptor))
             haml-file (io/file (:haml haml-descriptor))]
         (when (or (not (.exists dest-file))

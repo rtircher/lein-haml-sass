@@ -2,14 +2,11 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as string]))
 
-(def ^:private haml-extension "haml")
-(def ^:private default-extension "html")
-
-(defn- ends-with-haml-extension [file]
-  (.endsWith (.getName file) (str "." haml-extension)))
+(defn- ends-with-extension [file ext]
+  (.endsWith (.getName file) (str "." ext)))
 
 (defn- haml-file? [file]
-  (and (.isFile file) (ends-with-haml-extension file)))
+  (and (.isFile file) (ends-with-extension file "haml")))
 
 (defn- haml-files-from [dir]
   (let [f (io/file dir)
@@ -25,14 +22,12 @@
       (str dest-dir rel-file))
     (.getPath file)))
 
-(defn haml-dest-files-from
-  ([dir] (haml-dest-files-from dir {}))
-  ([dir opts]
-     (let [dest-dir (:dest opts)
-           new-ext  (or (:ext opts) default-extension)]
-       (map #(hash-map :haml (.getPath %)
-                       :dest (replace-dest-dir (replace-haml-extension % new-ext) dir dest-dir))
-            (haml-files-from dir)))))
+(defn dest-files-from [src-ext src-dir dest-dir dest-ext]
+  (map #(hash-map (keyword src-ext) (.getPath %)
+                  :dest (replace-dest-dir (replace-haml-extension % dest-ext) src-dir dest-dir))
+       (haml-files-from src-dir)))
+
+(def haml-dest-files-from (partial dest-files-from "haml"))
 
 (defn exists [dir]
   (and dir (.exists (io/file dir))))
