@@ -1,6 +1,6 @@
-(ns leiningen.lein-haml.options)
+(ns leiningen.lein-haml-sass.options)
 
-(def ^:private default-options {:haml-src "resources/haml"
+(def ^:private default-options {:src "resources"
                                  :output-extension "html"
                                  :delete-output-dir true
                                  :auto-compile-delay 250})
