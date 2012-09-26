@@ -20,11 +20,11 @@
 (defn- once
   "Compiles the haml files once"
   [options]
-  (println (str "Compiling haml files in " (:src options)))
+  (println (str "Compiling haml files located in " (:src options)))
   (compile-haml options false))
 
 (defn- auto
-  "Automatically recompiles when files are "
+  "Automatically recompiles when files are modified"
   [options]
   (println (str "Ready to compile haml located in " (:src options)))
   (compile-haml options true))
@@ -44,7 +44,7 @@
      (exit-failure (lhelp/help-for "haml")))
 
   ([project subtask & args]
-     (let [options (extract-options project)]
+     (let [options (extract-options :haml project)]
        (case subtask
          "once"  (once options)
          "auto"  (auto options)

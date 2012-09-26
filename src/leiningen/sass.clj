@@ -20,11 +20,11 @@
 (defn- once
   "Compiles the sass files once"
   [options]
-  (println (str "Compiling sass files in " (:src options)))
+  (println (str "Compiling sass files located in " (:src options)))
   (compile-sass options false))
 
 (defn- auto
-  "Automatically recompiles when files are "
+  "Automatically recompiles when files are modified"
   [options]
   (println (str "Ready to compile sass located in " (:src options)))
   (compile-sass options true))
@@ -44,7 +44,7 @@
      (exit-failure (lhelp/help-for "sass")))
 
   ([project subtask & args]
-     (let [options (extract-options project)]
+     (let [options (extract-options :sass project)]
        (case subtask
          "once"  (once options)
          "auto"  (auto options)
