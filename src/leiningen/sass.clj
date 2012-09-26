@@ -26,7 +26,8 @@
 (defn- auto
   "Automatically recompiles when files are modified"
   [options]
-  (println (str "Ready to compile sass located in " (:src options)))
+  (println (str "Ready to compile sass files located in " (:src options)))
+  (flush)
   (compile-sass options true))
 
 (defn- clean

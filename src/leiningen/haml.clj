@@ -26,7 +26,8 @@
 (defn- auto
   "Automatically recompiles when files are modified"
   [options]
-  (println (str "Ready to compile haml located in " (:src options)))
+  (println (str "Ready to compile haml files located in " (:src options)))
+  (flush)
   (compile-haml options true))
 
 (defn- clean
