@@ -14,7 +14,8 @@
   (dest-files-from "haml" src output-directory output-extension))
 (defn compile-haml
   [{:keys [auto-compile-delay] :as options} watch?]
-  (render-all! (haml-files-from options) auto-compile-delay watch?))
+  (render-all-haml! (haml-files-from options) auto-compile-delay watch?))
+
 
 (defn- once
   "Compiles the haml files once"
