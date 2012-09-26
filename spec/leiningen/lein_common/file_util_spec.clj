@@ -11,8 +11,19 @@
 
       (it "returns the filename with the extension replaced"
           (let [converted-file (.getPath (replace-extension (io/file "blah.haml") "haml" ".html"))]
-            (should (re-matches #".*.html$" converted-file))
-            (should-not (re-matches #".*.haml" converted-file))))
+            (should= "blah.html" converted-file)))
+
+      (it "returns the filename with the extension replaced when extension doesn't start with a '.'"
+          (let [converted-file (.getPath (replace-extension (io/file "blah.haml") "haml" "html"))]
+            (should= "blah.html" converted-file)))
+
+      (it "removes the last extension when the new extension is an empty string"
+          (let [converted-file (.getPath (replace-extension (io/file "blah.haml") "haml" ""))]
+            (should= "blah" converted-file)))
+
+      (it "removes the last extension when the new extension is nil"
+          (let [converted-file (.getPath (replace-extension (io/file "blah.haml") "haml" nil))]
+            (should= "blah" converted-file)))
 
     ))
 

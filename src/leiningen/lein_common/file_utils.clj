@@ -10,8 +10,14 @@
         fs (file-seq f)]
     (filter #(ends-with-extension % ext) fs)))
 
+(defn- normalize-extension [ext]
+  (if (or (nil? ext) (= \. (first ext)) (empty? ext))
+    (str ext)
+    (str "." ext)))
+
 (defn- replace-extension [file src-ext dest-ext]
-  (io/file (string/replace (.getPath file) (re-pattern (str "." src-ext "$")) (str "." dest-ext))))
+  (let [new-ext (normalize-extension dest-ext)]
+    (io/file (string/replace (.getPath file) (re-pattern (str "[.]" src-ext "$")) new-ext))))
 
 (defn- replace-dest-dir [file root-dir dest-dir]
   (if dest-dir
