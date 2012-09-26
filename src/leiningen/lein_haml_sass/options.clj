@@ -15,7 +15,7 @@
        normalize-hooks
        (merge default-options)))
 
-(defn extract-options [project]
-  (when (nil? (:haml project))
-    (println "WARNING: no :haml entry found in project definition."))
-  (normalize-options (:haml project)))
+(defn extract-options [src-type project]
+  (when (nil? (src-type project))
+    (println "WARNING: no " src-type " entry found in project definition."))
+  (normalize-options (src-type project)))

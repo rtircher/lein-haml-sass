@@ -19,7 +19,7 @@
 
   ;; Example on how to use lein-haml-sass
   :haml {:src "spec/files"
-         :output-directory "spec/out"
+         :output-directory "spec/out/haml"
          ;; Other options (provided are default values)
          ;; :output-extension html
          ;; :auto-compile-delay 250
@@ -28,7 +28,7 @@
          }
 
   :sass {:src "spec/files"
-         :output-directory "spec/out"
+         :output-directory "spec/out/sass"
          ;; Other options (provided are default values)
          ;; :output-extension css
          ;; :auto-compile-delay 250

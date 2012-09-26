@@ -54,7 +54,7 @@
 
 ;; Hooks stuffs
 (defmacro hook [task subtask args]
-  `(let [options# (extract-options (first ~args))]
+  `(let [options# (extract-options :haml (first ~args))]
      (apply ~task ~args)
      (when-not (~subtask (:ignore-hooks options#))
        (~(symbol (name subtask)) options#))))
