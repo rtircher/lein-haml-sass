@@ -9,6 +9,7 @@ FIXME: write
 ## TODO
 
 * allow compilation of scss files
+* allow minification options
 * document usage of project
 * Allow the use of a specific haml version if specified in the project.clj config
 * add support for lein2 (test it with lein2)

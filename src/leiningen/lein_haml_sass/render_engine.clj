@@ -40,6 +40,8 @@
 
 (def render-all-haml! (partial render-all! :haml haml-engine))
 (def render-all-sass! (partial render-all! :sass sass-engine))
+(def render-haml (fn [template] (render template haml-engine)))
+(def render-sass (fn [template] (render template sass-engine)))
 
 (defn clean-all! [src-dest-map output-directory delete-output-dir]
   (doseq [haml-descriptor src-dest-map]

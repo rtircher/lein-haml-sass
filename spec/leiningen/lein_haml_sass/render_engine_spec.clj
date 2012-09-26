@@ -1,0 +1,23 @@
+(ns leiningen.lein-haml-sass.render-engine-spec
+  (:use [speclj.core])
+  (:require [leiningen.lein-haml-sass.render-engine :as engine]))
+
+(describe "render-engine"
+
+  (let [ensure-engine-started! #'engine/ensure-engine-started!]
+
+    (describe "fn render"
+      (before (ensure-engine-started!))
+
+      (it "render the template correctly using haml gem"
+          (let [template "%html.a-class" ]
+            (should= "<html class='a-class'></html>\n" (engine/render-haml template))))
+
+      (it "render the template correctly using sass gem"
+          (let [template "
+.my-class
+  display: none" ]
+            (should= ".my-class {\n  display: none; }\n" (engine/render-sass template))))
+
+      ))
+  )
