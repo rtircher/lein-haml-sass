@@ -8,7 +8,7 @@ FIXME: write
 
 ## TODO
 
-* allow compilation of scss files
+* need to do some kind of perf test
 * allow minification options
 * document usage of project
 * Allow the use of a specific haml version if specified in the project.clj config

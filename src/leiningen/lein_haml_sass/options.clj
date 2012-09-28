@@ -10,12 +10,13 @@
         normalized-hooks (if (:compile hooks) (conj hooks :once) hooks)] 
     (assoc options :ignore-hooks normalized-hooks)))
 
-(defn- normalize-options [options]
-  (->> options
+(defn- normalize-options [src-type options]
+  (->> (src-type options)
        normalize-hooks
-       (merge default-options)))
+       (merge default-options)
+       (merge {:src-type src-type})))
 
 (defn extract-options [src-type project]
   (when (nil? (src-type project))
     (println "WARNING: no " src-type " entry found in project definition."))
-  (normalize-options (src-type project)))
+  (normalize-options src-type project))
