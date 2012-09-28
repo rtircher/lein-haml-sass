@@ -1,4 +1,4 @@
-# lein-haml
+# lein-haml-sass
 
 Leiningen plugin to compile haml files into html
 
@@ -8,13 +8,15 @@ FIXME: write
 
 ## TODO
 
-* need to do some kind of perf test
-* allow minification options
+* for all task, if no description in project.clj -> just finish that thread
 * document usage of project
+* allow minification options
+* need to do some kind of perf test
 * Allow the use of a specific haml version if specified in the project.clj config
 * add support for lein2 (test it with lein2)
 * create some kind of CI to run against different versions of lein
 * Remove all the unnecessary files from the embedded gem (maybe)
+* put colors in the terminal output
 
 ## License
 
