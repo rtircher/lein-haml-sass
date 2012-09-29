@@ -1,6 +1,6 @@
-(defproject lein-haml "0.1.0"
-  :description "HAML autobuilder plugin"
-  :url "https://github.com/rtircher/lein-haml"
+(defproject lein-haml-sass "0.1.0"
+  :description "HAML/SASS/SCSS autobuilder plugin"
+  :url "https://github.com/rtircher/lein-haml-sass"
   :license {:name "Eclipse Public License - v 1.0"
             :url "http://www.eclipse.org/legal/epl-v10.html"
             :distribution :repo}
