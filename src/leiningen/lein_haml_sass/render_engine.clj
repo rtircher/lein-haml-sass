@@ -26,7 +26,7 @@
     (dosync
      (ref-set c (ScriptingContainer. LocalContextScope/THREADSAFE))
 
-     (def gempath ["gems/gems/haml-3.1.7/lib", "src/gems/gems/sass-3.2.1/lib"])
+     (def gempath ["gems/gems/haml-3.1.7/lib", "gems/gems/sass-3.2.1/lib"])
      (.setLoadPaths @c gempath)
      (.runScriptlet @c "require 'rubygems'; require 'haml'; require 'sass'")
      (ref-set haml-engine (.runScriptlet @c "Haml::Engine"))
