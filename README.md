@@ -20,8 +20,6 @@ For each task, three subtasks are availbale:
 
 ## TODO
 
-* make sure that when the compiler throws an exception, the auto task
-  still keeps watching
 * document usage of project
 * allow minification options
 * need to do some kind of perf test

@@ -1,4 +1,4 @@
-(defproject lein-haml "0.0.1"
+(defproject lein-haml "0.1.0"
   :description "HAML autobuilder plugin"
   :url "https://github.com/rtircher/lein-haml"
   :license {:name "Eclipse Public License - v 1.0"
