@@ -53,10 +53,14 @@
   (dest-files-from (name src-type) src output-directory output-extension))
 
 (defn render [src-type template]
-  (let [args          (to-array [template (engine-options-for src-type)])
-        engine-class (engine-for src-type)
-        engine        (.callMethod @c @engine-class "new" args Object)]
-    (.callMethod @c engine "render" String)))
+  (try
+    (let [args          (to-array [template (engine-options-for src-type)])
+          engine-class (engine-for src-type)
+          engine        (.callMethod @c @engine-class "new" args Object)]
+      (.callMethod @c engine "render" String))
+    (catch Exception e
+      ;; ruby gem will print an error message
+      (println "      -> Compilation failed\n\n" ))))
 
 (defn render-all! [{:keys [src-type auto-compile-delay] :as options} watch?]
   (ensure-engine-started!)
@@ -66,9 +70,9 @@
             src-file (io/file (src-type file-descriptor))]
         (when (or (not (.exists dest-file))
                   (> (.lastModified src-file) (.lastModified dest-file)))
+          (println (str "   [" (name src-type) "] - " (java.util.Date.) " - " src-file " -> " dest-file))
           (io/make-parents dest-file)
-          (spit dest-file (render src-type (slurp (src-type file-descriptor))))
-          (println (str "   [" (name src-type) "] - " (java.util.Date.) " - " src-file " -> " dest-file)))))
+          (spit dest-file (render src-type (slurp (src-type file-descriptor)))))))
 
     (when watch?
       (Thread/sleep auto-compile-delay)
