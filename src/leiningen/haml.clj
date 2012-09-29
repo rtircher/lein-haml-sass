@@ -11,7 +11,7 @@
   "Compiles the haml files once"
   [options]
   (println (str "Compiling haml files located in " (:src options)))
-  (render-all! options false))
+  (render-all! options false true))
 
 (defn- auto
   "Automatically recompiles when files are modified"

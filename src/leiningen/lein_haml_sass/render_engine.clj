@@ -62,21 +62,25 @@
       ;; ruby gem will print an error message
       (println "      -> Compilation failed\n\n" ))))
 
-(defn render-all! [{:keys [src-type auto-compile-delay] :as options} watch?]
-  (ensure-engine-started!)
-  (loop []
-    (doseq [file-descriptor (files-from options)]
-      (let [dest-file (io/file (:dest file-descriptor))
-            src-file (io/file (src-type file-descriptor))]
-        (when (or (not (.exists dest-file))
-                  (> (.lastModified src-file) (.lastModified dest-file)))
-          (println (str "   [" (name src-type) "] - " (java.util.Date.) " - " src-file " -> " dest-file))
-          (io/make-parents dest-file)
-          (spit dest-file (render src-type (slurp (src-type file-descriptor)))))))
+(defn render-all!
+  ([options watch?] (render-all! options watch? false))
 
-    (when watch?
-      (Thread/sleep auto-compile-delay)
-      (recur))))
+  ([{:keys [src-type auto-compile-delay] :as options} watch? force?]
+     (ensure-engine-started!)
+     (loop []
+       (doseq [file-descriptor (files-from options)]
+         (let [dest-file (io/file (:dest file-descriptor))
+               src-file (io/file (src-type file-descriptor))]
+           (when (or force?
+                     (not (.exists dest-file))
+                     (> (.lastModified src-file) (.lastModified dest-file)))
+             (println (str "   [" (name src-type) "] - " (java.util.Date.) " - " src-file " -> " dest-file))
+             (io/make-parents dest-file)
+             (spit dest-file (render src-type (slurp (src-type file-descriptor)))))))
+
+       (when watch?
+         (Thread/sleep auto-compile-delay)
+         (recur)))))
 
 (defn clean-all! [{:keys [output-directory delete-output-dir] :as options}]
   (doseq [file-descriptor (files-from options)]
