@@ -1,4 +1,5 @@
-(ns leiningen.lein-common.lein-utils)
+(ns leiningen.lein-common.lein-utils
+  (:use [clojure.java.shell :only [sh]]))
 
 (def ^:private lein2?
   (try
@@ -23,3 +24,10 @@
 
 (defn task-not-found [subtask]
   (exit-failure (str "Subtask \"" subtask "\" not found.")))
+
+(defn install-gem! [{:keys [gem-name gem-version]}]
+  (let [gem-result (sh "java" "-jar" "lib/dev/jruby-complete-1.6.4.jar" "-S" "gem" "install" "-i" "lib/" gem-name "-v" gem-version "--no-rdoc" "--no-ri")]
+    (println (str "Installing: " gem-name "-" gem-version))
+    (if (= 0 (:exit gem-result))
+      (println (:out gem-result))
+      (exit-failure (:out gem-result)))))

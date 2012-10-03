@@ -21,13 +21,19 @@
           (RubySymbol/newSymbol @runtime (name src-type)))
     rb-hash))
 
-(defn- ensure-engine-started! []
+(defn- gem-path [{:keys [gem-name gem-version]}]
+  (let [default-path ["gems/gems/haml-3.1.7/lib" "gems/gems/sass-3.2.1/lib"]
+        gem-lib-dir (str "lib/gems/" gem-name "-" gem-version "/lib")]
+    (if (exists gem-lib-dir)
+      (conj default-path gem-lib-dir)
+      default-path)))
+
+(defn- ensure-engine-started! [options]
   (when-not @c
     (dosync
      (ref-set c (ScriptingContainer. LocalContextScope/THREADSAFE))
 
-     (def gempath ["gems/gems/haml-3.1.7/lib", "gems/gems/sass-3.2.1/lib"])
-     (.setLoadPaths @c gempath)
+     (.setLoadPaths @c (gem-path options))
      (.runScriptlet @c "require 'rubygems'; require 'haml'; require 'sass'")
      (ref-set haml-engine (.runScriptlet @c "Haml::Engine"))
      (ref-set sass-engine (.runScriptlet @c "Sass::Engine"))
@@ -66,7 +72,7 @@
   ([options watch?] (render-all! options watch? false))
 
   ([{:keys [src-type auto-compile-delay] :as options} watch? force?]
-     (ensure-engine-started!)
+     (ensure-engine-started! options)
      (loop []
        (doseq [file-descriptor (files-from options)]
          (let [dest-file (io/file (:dest file-descriptor))

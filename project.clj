@@ -14,7 +14,7 @@
   :eval-in-leiningen true
 
   ;; Example for adding lein haml hooks
-  ;; :hooks [leiningen.haml]
+  ;; :hooks [leiningen.scss]
 
   ;; Example on how to use lein-haml-sass
   :haml {:src "spec/files"
@@ -24,6 +24,7 @@
          ;; :auto-compile-delay 250
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
          ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
+         :gem-version "3.1.7"
          }
 
   :sass {:src "spec/files"
@@ -33,14 +34,16 @@
          ;; :auto-compile-delay 250
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
          ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
+         :gem-version "3.2.1"
          }
 
-    :scss {:src "spec/files"
+  :scss {:src "spec/files"
          :output-directory "spec/out/scss"
          ;; Other options (provided are default values)
          ;; :output-extension css
          ;; :auto-compile-delay 250
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
          ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
+         :gem-version "3.2.1"
          }
     )
