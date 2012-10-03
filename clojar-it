@@ -1,31 +1,47 @@
 #! /bin/bash
 
-function clean_up {
-  echo "Deleting lein-haml-sass jars"
-  rm -f lein-haml-sass*.jar
-  echo "Removing pom.xml file"
-  rm -f pom.xml
-}
-
-clean_up
-
-echo "Compiling project"
-lein jar
-RET_CODE=$?
-
-if [ "$RET_CODE" == 0 ]
+if [[ -z $1 ]]
 then
-  echo "Creating pom.xml file for deployement"
-  lein pom
+  echo "Enter new version for git tag (and remember to bump project.clj version"
+else
+
+  VERSION=$1
+
+  function clean_up {
+    echo "Deleting lein-haml-sass jars"
+    rm -f lein-haml-sass*.jar
+    echo "Removing pom.xml file"
+    rm -f pom.xml
+  }
+
+  clean_up
+
+  echo "Compiling project"
+  lein jar
   RET_CODE=$?
+
+  if [ "$RET_CODE" == 0 ]
+  then
+    echo "Creating pom.xml file for deployement"
+    lein pom
+    RET_CODE=$?
+  fi
+
+  if [ "$RET_CODE" == 0 ]
+  then
+    echo "Pushing library to clojars"
+    scp -i ~/.leiningen/id_rsa pom.xml lein-haml-sass*.jar clojars@clojars.org:
+    RET_CODE=$?
+  fi
+
+  if [ "$RET_CODE" == 0 ]
+  then
+    git tag -a "v$VERSION" -m "Version $VERSION"
+    RET_CODE=$?
+  fi
+
+  echo "Cleaning up"
+  clean_up
+
 fi
 
-if [ "$RET_CODE" == 0 ]
-then
-  echo "Pushing library to clojars"
-  scp -i ~/.leiningen/id_rsa pom.xml lein-haml-sass*.jar clojars@clojars.org:
-  RET_CODE=$?
-fi
-
-echo "Cleaning up"
-clean_up
