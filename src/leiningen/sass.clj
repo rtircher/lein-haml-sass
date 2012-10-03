@@ -5,6 +5,7 @@
   (:require [leiningen.help    :as lhelp]
             [leiningen.clean   :as lclean]
             [leiningen.compile :as lcompile]
+            [leiningen.deps    :as ldeps]
             [robert.hooke      :as hooke]))
 
 (defn- once
@@ -62,5 +63,9 @@
 (defn- clean-hook [task & args]
   (hook task :clean args))
 
+(defn- deps-hook [task & args]
+  (hook task :deps args))
+
 (hooke/add-hook #'lcompile/compile #'compile-hook)
 (hooke/add-hook #'lclean/clean #'clean-hook)
+(hooke/add-hook #'ldeps/deps   #'deps-hook)
