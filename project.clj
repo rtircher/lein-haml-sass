@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"
             :distribution :repo}
 
-  :dependencies [[org.jruby/jruby-complete "1.6.4"]]
+  :dependencies [[org.jruby/jruby-complete "1.6.8"]]
 
   :dev-dependencies [[speclj "2.1.1"]
                      [speclj-growl "1.0.1"]]
@@ -14,7 +14,7 @@
   :eval-in-leiningen true
 
   ;; Example for adding lein haml hooks
-  ;; :hooks [leiningen.scss]
+  ;; :hooks [leiningen.scss leiningen.haml]
 
   ;; Example on how to use lein-haml-sass
   :haml {:src "spec/files"
