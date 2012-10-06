@@ -8,7 +8,7 @@ You can install the pluggin by adding lein-haml-sass to your `project.clj` file 
 
 ```clj
 (defproject example "1.2.3"
-  :plugins [[lein-haml-sass "0.1.0"]])
+  :plugins [[lein-haml-sass "0.2.0"]])
 ```
 
 Run the following command to download the library:
@@ -30,6 +30,7 @@ Here is an example of `project.clj` with all the possible definitions.
          ;; :auto-compile-delay 250
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
          ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
+         ;; :gem-version "3.1.7"
          }
 
   :sass {:src "resources/sass"
@@ -39,21 +40,24 @@ Here is an example of `project.clj` with all the possible definitions.
          ;; :auto-compile-delay 250
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
          ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
+         ;; :gem-version "3.2.1"
          }
 
-    :scss {:src "resources/scss"
+  :scss {:src "resources/scss"
          :output-directory "resources/public/css"
          ;; Other options (provided are default values)
          ;; :output-extension css
          ;; :auto-compile-delay 250
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
          ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
+         ;; :gem-version "3.2.1"
          }
     )
 ```
 
 It is good to know that you only need to specify the section you plan to use.  So if you are only interested in haml just specify the `:haml` section.
 
+By default lain-haml-sass will come bundled with haml gem version 3.1.7 and sass gem version 3.2.1.  However, if you like you can specify another gem version by using the `:gem-version` key for haml, sass, or scss subtasks.  lein-haml-sass will download the appropriate gem by using `lein <subtask> deps` or `lein deps` if you have configured the hooks.
 
 ## Usage
 
@@ -106,7 +110,6 @@ To enable the hooks, add the following lein to your `project.clj` file:
 * document usage of project
 * allow minification options
 * need to do some kind of perf test
-* Allow the use of a specific haml version if specified in the project.clj config
 * add support for lein2 (test it with lein2)
 * create some kind of CI to run against different versions of lein
 * Remove all the unnecessary files from the embedded gem (maybe)
