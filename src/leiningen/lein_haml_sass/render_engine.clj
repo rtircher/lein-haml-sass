@@ -23,7 +23,8 @@
 
 (defn- gem-path [{:keys [gem-name gem-version]}]
   (let [default-path ["gems/gems/haml-3.1.7/lib" "gems/gems/sass-3.2.1/lib"]
-        gem-lib-dir (str "lib/gems/" gem-name "-" gem-version "/lib")]
+        gem-lib-dir (str "lib/gems/gems/" gem-name "-" gem-version "/lib")]
+
     (if (exists gem-lib-dir)
       (conj default-path gem-lib-dir)
       default-path)))

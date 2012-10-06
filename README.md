@@ -29,7 +29,7 @@ Here is an example of `project.clj` with all the possible definitions.
          ;; :output-extension html
          ;; :auto-compile-delay 250
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
-         ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
+         ;; :ignore-hooks [:clean :compile :deps] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
          ;; :gem-version "3.1.7"
          }
 
@@ -39,7 +39,7 @@ Here is an example of `project.clj` with all the possible definitions.
          ;; :output-extension css
          ;; :auto-compile-delay 250
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
-         ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
+         ;; :ignore-hooks [:clean :compile :deps] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
          ;; :gem-version "3.2.1"
          }
 
@@ -49,7 +49,7 @@ Here is an example of `project.clj` with all the possible definitions.
          ;; :output-extension css
          ;; :auto-compile-delay 250
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
-         ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
+         ;; :ignore-hooks [:clean :compile :deps] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
          ;; :gem-version "3.2.1"
          }
     )

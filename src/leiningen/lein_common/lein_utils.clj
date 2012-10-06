@@ -1,5 +1,5 @@
 (ns leiningen.lein-common.lein-utils
-  (:use [clojure.java.shell :only [sh]]))
+  (:import [org.jruby.embed ScriptingContainer LocalContextScope]))
 
 (def ^:private lein2?
   (try
@@ -26,8 +26,8 @@
   (exit-failure (str "Subtask \"" subtask "\" not found.")))
 
 (defn install-gem! [{:keys [gem-name gem-version]}]
-  (let [gem-result (sh "java" "-jar" "lib/dev/jruby-complete-1.6.8.jar" "-S" "gem" "install" "-i" "lib/" gem-name "-v" gem-version "--no-rdoc" "--no-ri")]
+  (let [container (ScriptingContainer. LocalContextScope/THREADSAFE)]
     (println (str "Installing: " gem-name "-" gem-version))
-    (if (= 0 (:exit gem-result))
-      (println (:out gem-result))
-      (exit-failure (:out gem-result)))))
+    (.runScriptlet container (str "require 'rubygems'
+require 'rubygems/dependency_installer'
+Gem::DependencyInstaller.new(:install_dir => 'lib/gems').install('" gem-name "', '" gem-version "')"))))
