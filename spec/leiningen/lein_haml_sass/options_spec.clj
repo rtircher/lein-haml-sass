@@ -6,6 +6,10 @@
 
   (describe "fn extract-option"
 
+    (it "returns nil when  it doesn't find the src-type in the project map"
+      (with-out-str ;; Just to capture the println output
+        (should= nil (extract-options :haml {}))))
+
     (it "warns the user when it doesn't find the src-type in the project map"
       (should= "WARNING: no :haml entry found in project definition.\n"
                (with-out-str (extract-options :haml {}))))
