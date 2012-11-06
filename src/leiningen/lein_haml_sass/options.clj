@@ -8,7 +8,9 @@
 
 (defn- normalize-hooks [options]
   (let [hooks            (into #{} (:ignore-hooks options))
-        normalized-hooks (if (:compile hooks) (conj hooks :once) hooks)]
+        normalized-hooks (if (:compile hooks)
+                           (disj (conj hooks :once) :compile)
+                           hooks)]
     (assoc options :ignore-hooks normalized-hooks)))
 
 (defn- normalize-gem-name [src-type]
