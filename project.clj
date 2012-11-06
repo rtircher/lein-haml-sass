@@ -5,7 +5,8 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"
             :distribution :repo}
 
-  :dependencies [[org.jruby/jruby-complete "1.6.8"]]
+  :dependencies [[org.clojure/clojure "1.4.0"]
+                 [org.jruby/jruby-complete "1.6.8"]]
 
   :dev-dependencies [[speclj "2.1.2"]
                      [speclj-growl "1.0.1"]]
