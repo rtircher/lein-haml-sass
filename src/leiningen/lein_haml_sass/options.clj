@@ -26,5 +26,5 @@
 
 (defn extract-options [src-type project]
   (when (nil? (src-type project))
-    (println "WARNING: no " src-type " entry found in project definition."))
+    (println "WARNING: no" src-type "entry found in project definition."))
   (normalize-options src-type project))
