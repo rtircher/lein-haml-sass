@@ -4,27 +4,30 @@
 
 (describe "render-engine"
 
-  (let [ensure-engine-started! #'engine/ensure-engine-started!]
+  (describe "fn render"
+    (with-all ensure-engine-started! #'engine/ensure-engine-started!)
 
-    (describe "fn render"
-      (before (ensure-engine-started! {}))
+    (before (@ensure-engine-started! {}))
 
-      (it "render the haml template correctly using haml gem"
-          (let [template "%html.a-class" ]
-            (should= "<html class='a-class'></html>\n" (engine/render :haml template))))
+    (it "render the haml template correctly using haml gem"
+      (let [template "%html.a-class" ]
+        (should= "<html class='a-class'></html>\n"
+                 (engine/render :haml template))))
 
-      (it "render the sass template correctly using sass gem"
-          (let [template "
+    (it "render the sass template correctly using sass gem"
+      (let [template "
 .my-class
   display: none" ]
-            (should= ".my-class {\n  display: none; }\n" (engine/render :sass template))))
+        (should= ".my-class {\n  display: none; }\n"
+                 (engine/render :sass template))))
 
-      (it "render the scss template correctly using sass gem"
-          (let [template "
+    (it "render the scss template correctly using sass gem"
+      (let [template "
 .my-class {
   display: none;
 }" ]
-            (should= ".my-class {\n  display: none; }\n" (engine/render :scss template))))
+        (should= ".my-class {\n  display: none; }\n"
+                 (engine/render :scss template))))
 
-      ))
+    )
   )
