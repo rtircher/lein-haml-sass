@@ -63,4 +63,24 @@
 
     (it "returns the dest file path using the specified dest extension"
       (should= ["spec/files/single/haml/blah.ext"]
-               (map :dest (@haml-dest-files-from @single-file-path nil "ext"))))))
+               (map :dest (@haml-dest-files-from @single-file-path nil "ext")))))
+
+  (describe "fn dir-empty?"
+    (it "is true when the directory is empty"
+      (should (dir-empty? "spec/files/empty_dir")))
+
+    (it "is false when the directory not is empty"
+      (should-not (dir-empty? "spec/files"))))
+
+  (describe "fn delete-directory-recursively!"
+    (it "doesn't do anything if the file doesn't exists"
+      (should-not (.exists (io/file "spec/file/does_not_exits")))
+      (delete-directory-recursively! "spec/file/does_not_exits")
+      (should-not (.exists (io/file "spec/file/does_not_exits"))))
+
+    (it "deletes the directory recursively"
+      (io/make-parents "spec/out/sub/blah")
+      (spit "spec/out/blah" "blah")
+      (spit "spec/out/sub/blah" "blah")
+      (delete-directory-recursively! "spec/out")
+      (should-not (.exists (io/file "spec/out"))))))

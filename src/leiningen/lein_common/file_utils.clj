@@ -43,5 +43,4 @@
 
 (defn delete-directory-recursively! [base-dir]
   (doseq [file (reverse (file-seq (io/file base-dir)))]
-    (println (str "Deleting: " file))
-    (io/delete-file file)))
+    (delete-file! file)))
