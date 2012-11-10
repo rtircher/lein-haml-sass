@@ -75,7 +75,7 @@
   (describe "fn delete-directory-recursively!"
     (it "doesn't do anything if the file doesn't exists"
       (should-not (.exists (io/file "spec/file/does_not_exits")))
-      (delete-directory-recursively! "spec/file/does_not_exits")
+      (should-not-throw (delete-directory-recursively! "spec/file/does_not_exits"))
       (should-not (.exists (io/file "spec/file/does_not_exits"))))
 
     (it "deletes the directory recursively"
