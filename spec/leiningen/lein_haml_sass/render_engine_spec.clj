@@ -27,7 +27,4 @@
   display: none;
 }" ]
         (should= ".my-class {\n  display: none; }\n"
-                 (engine/render :scss template))))
-
-    )
-  )
+                 (engine/render :scss template))))))
