@@ -53,13 +53,14 @@
           (exit-failure (lhelp/help-for ~type)))
 
        ([~'project ~'subtask & ~'args]
-          (let [~'options (extract-options ~src-type ~'project)]
+          (if-let [~'options (extract-options ~src-type ~'project)]
             (case ~'subtask
               "once"  (~'once  ~'options)
               "auto"  (~'auto  ~'options)
               "clean" (~'clean ~'options)
               "deps"  (~'deps  ~'options)
-              (task-not-found ~'subtask)))))))
+              (task-not-found ~'subtask))
+            (exit-failure))))))
 
 ;; Hooks stuffs
 (defmacro def-hook [src-type task subtask args]

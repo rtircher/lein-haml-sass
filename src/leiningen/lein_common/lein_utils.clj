@@ -15,12 +15,13 @@
 
 (defn exit-failure
   "Fail in a way that satisifies lein1 and lein2."
-  [error-msg]
-  (if lein2?
-    ((resolve 'leiningen.core.main/abort) error-msg)
-    (do
-      (println error-msg)
-      1)))
+  ([] (exit-failure ""))
+  ([error-msg]
+     (if lein2?
+       ((resolve 'leiningen.core.main/abort) error-msg)
+       (do
+         (println error-msg)
+         1))))
 
 (defn task-not-found [subtask]
   (exit-failure (str "Subtask \"" subtask "\" not found.")))
