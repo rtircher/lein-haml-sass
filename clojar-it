@@ -2,7 +2,7 @@
 
 if [[ -z $1 ]]
 then
-  echo "Enter new version for git tag (and remember to bump project.clj version"
+  echo "Enter new version for git tag (and remember to bump project.clj version)"
 else
 
   VERSION=$1
