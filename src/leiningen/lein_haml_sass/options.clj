@@ -19,11 +19,16 @@
     :sass {:gem-name "sass"}
     :scss {:gem-name "sass"}))
 
+(defn- compression-style [src-type]
+  (when (or (= src-type :sass) (= src-type :scss))
+    {:style :nested}))
+
 (defn- normalize-options [src-type options]
   (->> (src-type options)
        normalize-hooks
        (merge (normalize-gem-name src-type))
        (merge default-options)
+       (merge (compression-style src-type))
        (merge {:src-type src-type})))
 
 (defn extract-options [src-type project]

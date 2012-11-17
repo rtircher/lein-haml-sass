@@ -57,7 +57,13 @@
 
       (it "uses a compile delay of 250 ms"
         (should= 250
-                 (:auto-compile-delay (extract-options :haml {:haml {}})))))
+                 (:auto-compile-delay (extract-options :haml {:haml {}}))))
+
+      (it "contains a :nested formatting style for sass"
+        (should= :nested (:style (extract-options :sass {:sass {}}))))
+
+      (it "contains a :nested formatting style for scss"
+        (should= :nested (:style (extract-options :scss {:scss {}})))))
 
     (context "overwriting defaults"
       (it "lets you set sources folder"
@@ -73,4 +79,10 @@
 
       (it "lets you set a compile delay"
         (should= 500
-                 (:auto-compile-delay (extract-options :haml {:haml {:auto-compile-delay 500}})))))))
+                 (:auto-compile-delay (extract-options :haml {:haml {:auto-compile-delay 500}}))))
+
+      (it "lets you set the formatting style for sass"
+        (should= :compressed (:style (extract-options :sass {:sass {:style :compressed}}))))
+
+      (it "lets you set the formatting style for scss"
+        (should= :compressed (:style (extract-options :scss {:scss {:style :compressed}})))))))

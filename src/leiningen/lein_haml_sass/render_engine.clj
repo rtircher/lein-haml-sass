@@ -14,11 +14,12 @@
 (def ^:private sass-options (ref nil))
 (def ^:private scss-options (ref nil))
 
-(defn- rb-options-for [src-type]
+(defn- rb-options [options]
   (let [rb-hash (RubyHash. @runtime)]
-    (.put rb-hash
-          (RubySymbol/newSymbol @runtime "syntax")
-          (RubySymbol/newSymbol @runtime (name src-type)))
+    (doseq [[k v] options]
+      (.put rb-hash
+            (RubySymbol/newSymbol @runtime (name k))
+            (RubySymbol/newSymbol @runtime (name v))))
     rb-hash))
 
 (defn- gem-path [{:keys [gem-name gem-version]}]
@@ -40,8 +41,10 @@
      (ref-set sass-engine (.runScriptlet @c "Sass::Engine"))
      (ref-set runtime (-> (.getProvider @c) .getRuntime))
      (ref-set empty-options (RubyHash. @runtime))
-     (ref-set sass-options  (rb-options-for :sass))
-     (ref-set scss-options  (rb-options-for :scss)))))
+     (ref-set sass-options  (rb-options {:syntax :sass
+                                         :style  (:style options)}))
+     (ref-set scss-options  (rb-options {:syntax :scss
+                                         :style  (:style options)})))))
 
 (defn- engine-options-for [src-type]
   (case src-type

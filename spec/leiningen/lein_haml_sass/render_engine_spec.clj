@@ -6,25 +6,50 @@
 
   (describe "fn render"
     (with-all ensure-engine-started! #'engine/ensure-engine-started!)
+    (with-all ruby-scripting-container #'engine/c)
 
-    (before (@ensure-engine-started! {}))
+    (context "without options"
+      (before-all
+        (dosync (ref-set @@ruby-scripting-container nil))
+        (@ensure-engine-started! {:style :nested}))
 
-    (it "render the haml template correctly using haml gem"
-      (let [template "%html.a-class" ]
-        (should= "<html class='a-class'></html>\n"
-                 (engine/render :haml template))))
+      (it "render the haml template correctly using haml gem"
+        (let [template "%html.a-class" ]
+          (should= "<html class='a-class'></html>\n"
+                   (engine/render :haml template))))
 
-    (it "render the sass template correctly using sass gem"
-      (let [template "
+      (context "sass"
+        (it "render the sass template correctly using sass gem"
+          (let [template "
 .my-class
   display: none" ]
-        (should= ".my-class {\n  display: none; }\n"
-                 (engine/render :sass template))))
+            (should= ".my-class {\n  display: none; }\n"
+                     (engine/render :sass template)))))
 
-    (it "render the scss template correctly using sass gem"
-      (let [template "
+      (it "render the scss template correctly using sass gem"
+        (let [template "
 .my-class {
   display: none;
 }" ]
-        (should= ".my-class {\n  display: none; }\n"
-                 (engine/render :scss template))))))
+          (should= ".my-class {\n  display: none; }\n"
+                   (engine/render :scss template)))))
+
+    (context "with options"
+      (before
+        (dosync (ref-set @@ruby-scripting-container nil))
+        (@ensure-engine-started! {:style :compressed}))
+
+      (it "uses the correct style to render sass"
+        (let [template "
+.my-class
+  display: none" ]
+          (should= ".my-class{display:none}\n"
+                   (engine/render :sass template))))
+
+      (it "uses the correct style to render scss"
+        (let [template "
+.my-class {
+  display: none;
+}" ]
+          (should= ".my-class{display:none}\n"
+                   (engine/render :scss template)))))))
