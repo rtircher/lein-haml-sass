@@ -30,6 +30,7 @@
       (conj default-path gem-lib-dir)
       default-path)))
 
+;; TODO improve this function (this is messy)
 (defn- ensure-engine-started! [options]
   (when-not @c
     (dosync
@@ -42,9 +43,9 @@
      (ref-set runtime (-> (.getProvider @c) .getRuntime))
      (ref-set empty-options (RubyHash. @runtime))
      (ref-set sass-options  (rb-options {:syntax :sass
-                                         :style  (:style options)}))
+                                         :style  (or (:style options) :nested)}))
      (ref-set scss-options  (rb-options {:syntax :scss
-                                         :style  (:style options)})))))
+                                         :style  (or (:style options) :nested)})))))
 
 (defn- engine-options-for [src-type]
   (case src-type

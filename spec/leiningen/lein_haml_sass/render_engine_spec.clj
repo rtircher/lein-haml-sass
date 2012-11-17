@@ -11,7 +11,7 @@
     (context "without options"
       (before-all
         (dosync (ref-set @@ruby-scripting-container nil))
-        (@ensure-engine-started! {:style :nested}))
+        (@ensure-engine-started! {}))
 
       (it "render the haml template correctly using haml gem"
         (let [template "%html.a-class" ]
