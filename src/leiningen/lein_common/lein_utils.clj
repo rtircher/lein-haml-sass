@@ -27,8 +27,9 @@
   (exit-failure (str "Subtask \"" subtask "\" not found.")))
 
 (defn install-gem! [{:keys [gem-name gem-version]}]
-  (let [container (ScriptingContainer. LocalContextScope/THREADSAFE)]
-    (println (str "Installing: " gem-name "-" gem-version))
-    (.runScriptlet container (str "require 'rubygems'
+  (when gem-version
+    (let [container (ScriptingContainer. LocalContextScope/THREADSAFE)]
+      (println (str "Installing: " gem-name "-" gem-version))
+      (.runScriptlet container (str "require 'rubygems'
 require 'rubygems/dependency_installer'
-Gem::DependencyInstaller.new(:install_dir => 'lib/gems').install('" gem-name "', '" gem-version "')"))))
+Gem::DependencyInstaller.new(:install_dir => 'lib/gems').install('" gem-name "', '" gem-version "')")))))

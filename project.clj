@@ -1,4 +1,4 @@
-(defproject lein-haml-sass "0.2.3"
+(defproject lein-haml-sass "0.2.4"
   :description "HAML/SASS/SCSS autobuilder plugin"
   :url "https://github.com/rtircher/lein-haml-sass"
   :license {:name "Eclipse Public License - v 1.0"
@@ -15,7 +15,7 @@
   :eval-in-leiningen true
 
   ;; Example for adding lein haml hooks
-  ;; :hooks [leiningen.scss leiningen.haml]
+  ;; :hooks [leiningen.scss leiningen.sass leiningen.haml]
 
   ;; Example on how to use lein-haml-sass
   :haml {:src "spec/files"
@@ -34,8 +34,7 @@
          ;; :output-extension css
          ;; :auto-compile-delay 250
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
-         ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
-         :gem-version "3.2.1"
+         :ignore-hooks [:deps] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
          :style :nested ;; valid: :nested, :expanded, :compact, :compressed
          }
 
