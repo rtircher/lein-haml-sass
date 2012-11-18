@@ -1,7 +1,7 @@
 (ns leiningen.lein-common.lein-utils
   (:import [org.jruby.embed ScriptingContainer LocalContextScope]))
 
-(def ^:private lein2?
+(def lein2?
   (try
     (require 'leiningen.core.main)
     true
