@@ -46,7 +46,7 @@
         doc   (str "Compiles " type " files.")]
     `(defn ~fname
        ~doc
-       {:help-arglists '([~'once ~'auto ~'clean])
+       {:help-arglists '([~'once ~'auto ~'clean ~'deps])
         :subtasks [~'#'once ~'#'auto ~'#'clean ~'#'deps]}
         ;; ~'#'blah defines an unqualified var named blah
        ([~'project]
