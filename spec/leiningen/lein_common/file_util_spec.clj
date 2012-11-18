@@ -75,12 +75,14 @@
   (describe "fn delete-directory-recursively!"
     (it "doesn't do anything if the file doesn't exists"
       (should-not (.exists (io/file "spec/file/does_not_exits")))
-      (should-not-throw (delete-directory-recursively! "spec/file/does_not_exits"))
+      (with-out-str
+        (should-not-throw (delete-directory-recursively! "spec/file/does_not_exits")))
       (should-not (.exists (io/file "spec/file/does_not_exits"))))
 
     (it "deletes the directory recursively"
       (io/make-parents "spec/out/sub/blah")
       (spit "spec/out/blah" "blah")
       (spit "spec/out/sub/blah" "blah")
-      (delete-directory-recursively! "spec/out")
+      (with-out-str
+        (delete-directory-recursively! "spec/out"))
       (should-not (.exists (io/file "spec/out"))))))
