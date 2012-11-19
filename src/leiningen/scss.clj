@@ -7,21 +7,12 @@
             [leiningen.deps    :as ldeps]
             [robert.hooke      :as hooke]))
 
-(tasks/def-once :scss)
-(tasks/def-auto :scss)
-(tasks/def-clean :scss)
-(tasks/def-deps "sass")
+;; TODO remove ref to sass here
+(tasks/def-lein-task scss "sass")
 
-(tasks/def-lein-task :scss)
-
-(defn- compile-hook [task & args]
-  (tasks/def-hook :scss task :once args))
-
-(defn- clean-hook [task & args]
-  (tasks/def-hook :scss task :clean args))
-
-(defn- deps-hook [task & args]
-  (tasks/def-hook :scss task :deps args))
+(tasks/def-hook compile-hook :scss :once)
+(tasks/def-hook clean-hook   :scss :clean)
+(tasks/def-hook deps-hook    :scss :deps)
 
 (defn activate
   "Set up hooks for the plugin.  Eventually, this can be changed to just hooks,
