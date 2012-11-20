@@ -16,9 +16,16 @@ else
 
   clean_up
 
-  echo "Compiling project"
-  lein jar
+  echo "Runing tests"
+  lein spec once
   RET_CODE=$?
+
+  if [ "$RET_CODE" == 0 ]
+  then
+    echo "Compiling project"
+    lein jar
+    RET_CODE=$?
+  fi
 
   if [ "$RET_CODE" == 0 ]
   then
