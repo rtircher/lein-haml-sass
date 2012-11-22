@@ -17,7 +17,7 @@ Run the following command to download the library:
 
 ## configuration
 
-The configuration for haml, sass, and scss is specified under the `:haml`, `:sass`, and `scss` sections of your `project.clj.
+The configuration for haml, sass, and scss is specified under the `:haml`, `:sass`, and `:scss` sections of your `project.clj.
 
 Here is an example of `project.clj` with all the possible definitions.
 
@@ -26,7 +26,7 @@ Here is an example of `project.clj` with all the possible definitions.
   :haml {:src "resources/haml"
          :output-directory "resources/public/html"
          ;; Other options (provided are default values)
-         ;; :output-extension html
+         ;; :output-extension "html"
          ;; :auto-compile-delay 250
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
          ;; :ignore-hooks [:clean :compile :deps] ;; -> if you use the hooks, this option allows you to remove some hooks that you don't want to run
@@ -36,7 +36,7 @@ Here is an example of `project.clj` with all the possible definitions.
   :sass {:src "resources/sass"
          :output-directory "resources/public/css"
          ;; Other options (provided are default values)
-         ;; :output-extension css
+         ;; :output-extension "css"
          ;; :auto-compile-delay 250
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
          ;; :ignore-hooks [:clean :compile :deps] ;; -> if you use the hooks, this option allows you to remove some hooks that you don't want to run
@@ -46,7 +46,7 @@ Here is an example of `project.clj` with all the possible definitions.
   :scss {:src "resources/scss"
          :output-directory "resources/public/css"
          ;; Other options (provided are default values)
-         ;; :output-extension css
+         ;; :output-extension "css"
          ;; :auto-compile-delay 250
          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
          ;; :ignore-hooks [:clean :compile :deps] ;; -> if you use the hooks, this option allows you to remove some hooks that you don't want to run
