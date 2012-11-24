@@ -7,20 +7,15 @@
             [leiningen.deps    :as ldeps]
             [robert.hooke      :as hooke]))
 
-;; TODO remove ref to sass here
-(tasks/def-lein-task scss "sass")
-
-(tasks/def-hook compile-hook :scss :once)
-(tasks/def-hook clean-hook   :scss :clean)
-(tasks/def-hook deps-hook    :scss :deps)
+(tasks/def-lein-task scss)
 
 (defn activate
   "Set up hooks for the plugin.  Eventually, this can be changed to just hooks,
    and people won't have to specify :hooks in their project.clj files anymore."
   []
-  (hooke/add-hook #'lcompile/compile #'compile-hook)
-  (hooke/add-hook #'lclean/clean #'clean-hook)
-  (hooke/add-hook #'ldeps/deps   #'deps-hook))
+  (hooke/add-hook #'lcompile/compile (tasks/standard-hook :scss :once))
+  (hooke/add-hook #'lclean/clean     (tasks/standard-hook :scss :clean))
+  (hooke/add-hook #'ldeps/deps       (tasks/standard-hook :scss :deps)))
 
 ; Lein1 hooks have to be called manually, in lein2 the activate function will
 ; be automatically called.
