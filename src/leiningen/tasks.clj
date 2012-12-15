@@ -46,6 +46,11 @@
                         :repositories (merge cemerick.pomegranate.aether/maven-central
                                              {"gem-jars" "http://gemjars.org/maven"})))))
 
+(defn- ensure-using-lein2 []
+  (when-not lein2?
+    (exit-failure "You need to use leiningen 2.XX with the version of the plugin.
+Refer to the README for further details.")))
+
 (defmacro def-lein-task [task-name]
   (let [type  (name task-name)
         src-type (keyword task-name)
@@ -61,6 +66,7 @@
           (exit-failure (lhelp/help-for ~type)))
 
        ([~'project ~'subtask & ~'args]
+          (~ensure-using-lein2)
           (if-let [options# (extract-options ~src-type ~'project)]
             (do (#'ensure-gem-installed! ~'project options#)
                 (case ~'subtask
@@ -82,6 +88,7 @@
     (let [options (extract-options src-type project)
           task-fn (task-fn-for subtask)]
       (when-not (subtask (:ignore-hooks options))
+        (ensure-using-lein2)
         (ensure-gem-installed! project options)
         (apply task (cons project args))
         (task-fn options)))))

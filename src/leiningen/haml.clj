@@ -14,7 +14,3 @@
   []
   (hooke/add-hook #'lcompile/compile (tasks/standard-hook :haml :once))
   (hooke/add-hook #'lclean/clean     (tasks/standard-hook :haml :clean)))
-
-; Lein1 hooks have to be called manually, in lein2 the activate function will
-; be automatically called.
-(when-not lein2? (activate))
