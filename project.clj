@@ -1,4 +1,4 @@
-(defproject lein-haml-sass "0.2.4"
+(defproject lein-haml-sass "0.2.5"
   :description "HAML/SASS/SCSS autobuilder plugin"
   :url "https://github.com/rtircher/lein-haml-sass"
   :license {:name "Eclipse Public License - v 1.0"
@@ -11,6 +11,8 @@
   :dev-dependencies [[speclj "2.1.2"]
                      [speclj-growl "1.0.1"]]
   :test-path "spec/"
+
+  :repositories [["gem-jars" "http://gemjars.org/maven"]]
 
   :eval-in-leiningen true
 

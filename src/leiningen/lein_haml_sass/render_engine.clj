@@ -36,7 +36,6 @@
     (dosync
      (ref-set c (ScriptingContainer. LocalContextScope/THREADSAFE))
 
-     (.setLoadPaths @c (gem-path options))
      (.runScriptlet @c "require 'rubygems'; require 'haml'; require 'sass'")
      (ref-set haml-engine (.runScriptlet @c "Haml::Engine"))
      (ref-set sass-engine (.runScriptlet @c "Sass::Engine"))
