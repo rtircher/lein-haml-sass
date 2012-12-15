@@ -107,12 +107,11 @@ To enable the hooks, add the following lein to your `project.clj` file:
 
 ## TODO
 
+* improve ensure-engine-started!
 * document separate usage for lein1 and lein2
-* add check for lein1 and lein2 in each version and fail appropriately
+* add check for lein2 in lein1 version and fail appropriately
 * document usage of project
-* checks deps before running tasks
 * need to do some kind of perf test
-* add support for lein2 (test it with lein2)
 * create some kind of CI to run against different versions of lein
 * put colors in the terminal output
 
