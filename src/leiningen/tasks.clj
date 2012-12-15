@@ -38,14 +38,13 @@
 (defn- enrich-fn [fn doc]
   (with-meta fn (fn-meta fn doc)))
 
-(defn- gemify-project! [project options]
+(defn- ensure-gem-installed! [project options]
   (let [gem-name (symbol (str "org.rubygems/" (:gem-name options)))
         gem-version (:gem-version options)]
     (when gem-version ;; Only try to fetch if there is a gem specified
       (add-dependencies :coordinates [[gem-name gem-version]]
                         :repositories (merge cemerick.pomegranate.aether/maven-central
-                                             {"gem-jars" "http://gemjars.org/maven"}))
-      (update-in project [:dependencies] conj [gem-name gem-version]))))
+                                             {"gem-jars" "http://gemjars.org/maven"})))))
 
 (defmacro def-lein-task [task-name]
   (let [type  (name task-name)
@@ -63,7 +62,7 @@
 
        ([~'project ~'subtask & ~'args]
           (if-let [options# (extract-options ~src-type ~'project)]
-            (do (#'gemify-project! ~'project options#)
+            (do (#'ensure-gem-installed! ~'project options#)
                 (case ~'subtask
                   "once"  (~once  options#)
                   "auto"  (~auto  options#)
@@ -81,8 +80,8 @@
 (defn standard-hook [src-type subtask]
   (fn [task project & args]
     (let [options (extract-options src-type project)
-          task-fn (task-fn-for subtask)
-          gemified-project (gemify-project! project options)]
+          task-fn (task-fn-for subtask)]
       (when-not (subtask (:ignore-hooks options))
+        (ensure-gem-installed! project options)
         (apply task (cons project args))
         (task-fn options)))))
