@@ -109,7 +109,6 @@ To enable the hooks, add the following lein to your `project.clj` file:
 
 * document separate usage for lein1 and lein2
 * add check for lein1 and lein2 in each version and fail appropriately
-* TODO remove bundled gems and use default gem to do in options.clj
 * document usage of project
 * checks deps before running tasks
 * need to do some kind of perf test

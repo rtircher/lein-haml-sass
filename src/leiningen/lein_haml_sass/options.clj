@@ -13,11 +13,11 @@
                            hooks)]
     (assoc options :ignore-hooks normalized-hooks)))
 
-(defn- normalize-gem-name [src-type]
+(defn- default-gem [src-type]
   (case src-type
-    :haml {:gem-name "haml"}
-    :sass {:gem-name "sass"}
-    :scss {:gem-name "sass"}))
+    :haml {:gem-name "haml" :gem-version "3.1.7"}
+    :sass {:gem-name "sass" :gem-version "3.2.1"}
+    :scss {:gem-name "sass" :gem-version "3.2.1"}))
 
 (defn- compression-style [src-type]
   (when (or (= src-type :sass) (= src-type :scss))
@@ -26,7 +26,7 @@
 (defn- normalize-options [src-type options]
   (->> (src-type options)
        normalize-hooks
-       (merge (normalize-gem-name src-type))
+       (merge (default-gem src-type))
        (merge default-options)
        (merge (compression-style src-type))
        (merge {:src-type src-type})))
