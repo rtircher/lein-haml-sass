@@ -22,6 +22,10 @@
             (RubySymbol/newSymbol @runtime (name v))))
     rb-hash))
 
+(defn- build-sass-options [src-type options]
+  (rb-options {:syntax src-type
+               :style  (or (:style options) :nested)}))
+
 ;; TODO improve this function (this is messy)
 (defn- ensure-engine-started! [options]
   (when-not @c
@@ -29,14 +33,14 @@
      (ref-set c (ScriptingContainer. LocalContextScope/THREADSAFE))
 
      (.runScriptlet @c "require 'rubygems'; require 'haml'; require 'sass'")
-     (ref-set haml-engine (.runScriptlet @c "Haml::Engine"))
-     (ref-set sass-engine (.runScriptlet @c "Sass::Engine"))
      (ref-set runtime (-> (.getProvider @c) .getRuntime))
+
+     (ref-set haml-engine (.runScriptlet @c "Haml::Engine"))
      (ref-set empty-options (RubyHash. @runtime))
-     (ref-set sass-options  (rb-options {:syntax :sass
-                                         :style  (or (:style options) :nested)}))
-     (ref-set scss-options  (rb-options {:syntax :scss
-                                         :style  (or (:style options) :nested)})))))
+
+     (ref-set sass-engine (.runScriptlet @c "Sass::Engine"))
+     (ref-set sass-options (build-sass-options :sass options))
+     (ref-set scss-options (build-sass-options :scss options)))))
 
 (defn- engine-options-for [src-type]
   (case src-type
