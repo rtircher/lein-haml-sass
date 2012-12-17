@@ -107,6 +107,7 @@ To enable the hooks, add the following lein to your `project.clj` file:
 
 ## TODO
 
+* make project.clj lein2 idiomatic...
 * improve ensure-engine-started!
 * document separate usage for lein1 and lein2
 * add check for lein2 in lein1 version and fail appropriately
