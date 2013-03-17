@@ -43,8 +43,10 @@ else
 
   if [ "$RET_CODE" == 0 ]
   then
+    echo "Creating new tag"
     git tag -a "v$VERSION" -m "Version $VERSION"
-    RET_CODE=$?
+    echo "Uploading tag"
+    git push --tags
   fi
 
   echo "Cleaning up"
