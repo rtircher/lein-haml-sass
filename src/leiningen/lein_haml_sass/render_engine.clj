@@ -2,7 +2,7 @@
   (:use leiningen.lein-common.file-utils)
   (:require [clojure.java.io :as io])
   (:import [org.jruby.embed ScriptingContainer LocalContextScope]
-           [org.jruby RubyHash RubySymbol]))
+           [org.jruby RubyHash RubySymbol RubyArray]))
 
 (def ^:private c (ref nil))
 (def ^:private runtime (ref nil))
@@ -14,17 +14,26 @@
 (def ^:private sass-options (ref nil))
 (def ^:private scss-options (ref nil))
 
+(defn- rb-array [coll]
+  (let [array (RubyArray/newArray @runtime)]
+    (doseq [v coll] (.add array v))
+    array))
+
+(defn- rb-symbol [string]
+  (RubySymbol/newSymbol @runtime (name string)))
+
 (defn- rb-options [options]
   (let [rb-hash (RubyHash. @runtime)]
     (doseq [[k v] options]
-      (.put rb-hash
-            (RubySymbol/newSymbol @runtime (name k))
-            (RubySymbol/newSymbol @runtime (name v))))
+      (let [key (rb-symbol k)
+            value (if (coll? v) (rb-array v) (rb-symbol v))]
+        (.put rb-hash key value)))
     rb-hash))
 
-(defn- build-sass-options [src-type options]
+(defn- build-sass-options [src-type {:keys [src output-directory style]}]
   (rb-options {:syntax src-type
-               :style  (or (:style options) :nested)}))
+               :style  (or style :nested)
+               :load_paths [src output-directory]}))
 
 ;; TODO improve this function (this is messy)
 (defn- ensure-engine-started! [options]

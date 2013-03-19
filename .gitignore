@@ -8,3 +8,4 @@
 /.lein-deps-sum
 /spec/out/
 /target
+/.sass-cache/
