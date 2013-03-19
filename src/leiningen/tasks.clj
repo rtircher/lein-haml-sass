@@ -46,6 +46,32 @@
                         :repositories (merge cemerick.pomegranate.aether/maven-central
                                              {"gem-jars" "http://gemjars.org/maven"})))))
 
+(defn- download-gem-using-gemjars [gem-name gem-version]
+  (let [gem-id (symbol (str "org.rubygems/" gem-name))]
+    (try
+      (add-dependencies :coordinates [[gem-id gem-version]]
+                        :repositories (merge cemerick.pomegranate.aether/maven-central
+                                             {"gem-jars" "http://gemjars.org/maven"}))
+      (catch Exception e false))))
+
+(defn- download-gem-using-torquebox [gem-name gem-version]
+  (let [gem-id (symbol (str "rubygems/" gem-name))]
+    (try
+      (add-dependencies :coordinates [[gem-id gem-version :extension "gem"]]
+                        :repositories (merge cemerick.pomegranate.aether/maven-central
+                                             {"rubygems-proxy.torquebox" "http://rubygems-proxy.torquebox.org/releases"}))
+      (catch Exception e
+        (println (.getMessage e))
+        false))))
+
+(defn- ensure-gem-installed! [project options]
+  (let [gem-name (:gem-name options)
+        gem-version (:gem-version options)]
+    (when gem-version ;; Only try to fetch if there is a gem specified
+      (or
+       (download-gem-using-gemjars gem-name gem-version)
+       (download-gem-using-torquebox gem-name gem-version)))))
+
 (defn- ensure-using-lein2 []
   (when-not lein2?
     (exit-failure "You need to use leiningen 2.XX with the version of the plugin.
