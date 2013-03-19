@@ -6,13 +6,12 @@
             :distribution :repo}
 
   :dependencies [[org.clojure/clojure "1.4.0"]
-                 [org.jruby/jruby-complete "1.6.8"]]
+                 [org.jruby/jruby-complete "1.6.8"]
+                 [com.cemerick/pomegranate "0.2.0"]]
 
-  :dev-dependencies [[speclj "2.1.2"]
-                     [speclj-growl "1.0.1"]]
-  :test-path "spec/"
-
-  :repositories [["gem-jars" "http://gemjars.org/maven"]]
+  :profiles {:dev {:dependencies [[speclj "2.5.0"]]}}
+  :plugins [[speclj "2.5.0"]]
+  :test-paths ["spec/"]
 
   :eval-in-leiningen true
 
