@@ -8,7 +8,7 @@ You can install the pluggin by adding lein-haml-sass to your `project.clj` file 
 
 ```clj
 (defproject example "1.2.3"
-  :plugins [[lein-haml-sass "0.2.4"]])
+  :plugins [[lein-haml-sass "0.2.5"]])
 ```
 
 Run the following command to download the library:
@@ -121,6 +121,6 @@ To enable the hooks, add the following lein to your `project.clj` file:
 
 ## License
 
-Copyright (C) 2012 Renaud Tircher
+Copyright (C) 2013 Renaud Tircher
 
 Distributed under the Eclipse Public License, the same as Clojure.
