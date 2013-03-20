@@ -2,14 +2,14 @@
 
 if [[ -z $1 ]]
 then
-  echo "Enter new version for git tag (and remember to bump project.clj version)"
+  echo "Enter new version for git tag (and remember to bump project.clj and README.md versions)"
 else
 
   VERSION=$1
 
   function clean_up {
     echo "Deleting lein-haml-sass jars"
-    rm -f lein-haml-sass*.jar
+    rm -rf target
     echo "Removing pom.xml file"
     rm -f pom.xml
   }
@@ -37,13 +37,13 @@ else
   if [ "$RET_CODE" == 0 ]
   then
     echo "Pushing library to clojars"
-    scp -i ~/.leiningen/id_rsa pom.xml lein-haml-sass*.jar clojars@clojars.org:
+    scp -i ~/.leiningen/id_rsa pom.xml target/lein-haml-sass*.jar clojars@clojars.org:
     RET_CODE=$?
   fi
 
   if [ "$RET_CODE" == 0 ]
   then
-    echo "Creating new tag"
+    echo "Creating new tag v$VERSION"
     git tag -a "v$VERSION" -m "Version $VERSION"
     echo "Uploading tag"
     git push --tags
