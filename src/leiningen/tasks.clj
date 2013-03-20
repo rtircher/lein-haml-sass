@@ -38,14 +38,6 @@
 (defn- enrich-fn [fn doc]
   (with-meta fn (fn-meta fn doc)))
 
-(defn- ensure-gem-installed! [project options]
-  (let [gem-name (symbol (str "org.rubygems/" (:gem-name options)))
-        gem-version (:gem-version options)]
-    (when gem-version ;; Only try to fetch if there is a gem specified
-      (add-dependencies :coordinates [[gem-name gem-version]]
-                        :repositories (merge cemerick.pomegranate.aether/maven-central
-                                             {"gem-jars" "http://gemjars.org/maven"})))))
-
 (defn- download-gem-using-gemjars [gem-name gem-version]
   (let [gem-id (symbol (str "org.rubygems/" gem-name))]
     (try
