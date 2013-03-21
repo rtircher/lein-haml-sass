@@ -17,7 +17,7 @@ else
   clean_up
 
   echo "Runing tests"
-  lein spec once
+  lein spec
   RET_CODE=$?
 
   if [ "$RET_CODE" == 0 ]
