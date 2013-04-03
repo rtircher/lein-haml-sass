@@ -7,8 +7,7 @@
 (def ^:private c (ref nil))
 (def ^:private runtime (ref nil))
 
-(def ^:private haml-engine (ref nil))
-(def ^:private sass-engine (ref nil))
+(def ^:private rendering-engine (ref nil))
 
 (def ^:private empty-options (ref nil))
 (def ^:private sass-options (ref nil))
@@ -49,10 +48,10 @@
 
      (if (= (:gem-name options) "haml")
        (do
-         (ref-set haml-engine (.runScriptlet @c "Haml::Engine"))
+         (ref-set rendering-engine (.runScriptlet @c "Haml::Engine"))
          (ref-set empty-options (RubyHash. @runtime)))
        (do
-         (ref-set sass-engine (.runScriptlet @c "Sass::Engine"))
+         (ref-set rendering-engine (.runScriptlet @c "Sass::Engine"))
          (ref-set sass-options (build-sass-options :sass options))
          (ref-set scss-options (build-sass-options :scss options)))))))
 
@@ -62,20 +61,13 @@
     :scss @scss-options
     @empty-options))
 
-(defn- engine-for [src-type]
-  (case src-type
-    :haml haml-engine
-    :sass sass-engine
-    :scss sass-engine))
-
 (defn- files-from [{:keys [src src-type output-directory output-extension]}]
   (dest-files-from (name src-type) src output-directory output-extension))
 
 (defn render [src-type template]
   (try
     (let [args         (to-array [template (engine-options-for src-type)])
-          engine-class (engine-for src-type)
-          engine       (.callMethod @c @engine-class "new" args Object)]
+          engine       (.callMethod @c @rendering-engine "new" args Object)]
       (.callMethod @c engine "render" String))
     (catch Exception e
       ;; ruby gem will print an error message
