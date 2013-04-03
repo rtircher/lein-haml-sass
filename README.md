@@ -110,6 +110,8 @@ To enable the hooks, add the following lein to your `project.clj` file:
 
 ## TODO
 
+* Ensure the newly downloaded gems are on the classpath after download
+* cleanup ensure-engine-started
 * make project.clj lein2 idiomatic...
 * improve ensure-engine-started!
 * document separate usage for lein1 and lein2
