@@ -35,21 +35,26 @@
                :style  (or style :nested)
                :load_paths [src output-directory]}))
 
+(defn- require-gem [gem-name]
+  (.runScriptlet @c (str "require 'rubygems'; require '" (name gem-name) "';")))
+
 ;; TODO improve this function (this is messy)
 (defn- ensure-engine-started! [options]
   (when-not @c
     (dosync
      (ref-set c (ScriptingContainer. LocalContextScope/THREADSAFE))
 
-     (.runScriptlet @c "require 'rubygems'; require 'haml'; require 'sass'")
+     (require-gem (:gem-name options))
      (ref-set runtime (-> (.getProvider @c) .getRuntime))
 
-     (ref-set haml-engine (.runScriptlet @c "Haml::Engine"))
-     (ref-set empty-options (RubyHash. @runtime))
-
-     (ref-set sass-engine (.runScriptlet @c "Sass::Engine"))
-     (ref-set sass-options (build-sass-options :sass options))
-     (ref-set scss-options (build-sass-options :scss options)))))
+     (if (= (:src-type options) :haml)
+       (do
+         (ref-set haml-engine (.runScriptlet @c "Haml::Engine"))
+         (ref-set empty-options (RubyHash. @runtime)))
+       (do
+         (ref-set sass-engine (.runScriptlet @c "Sass::Engine"))
+         (ref-set sass-options (build-sass-options :sass options))
+         (ref-set scss-options (build-sass-options :scss options)))))))
 
 (defn- engine-options-for [src-type]
   (case src-type
