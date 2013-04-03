@@ -52,8 +52,7 @@
 (defn- ensure-gem-installed! [project options]
   (let [gem-name (:gem-name options)
         gem-version (:gem-version options)]
-    (when gem-version ;; Only try to fetch if there is a gem specified
-      (download-gem-using-gemjars gem-name gem-version))))
+    (download-gem-using-gemjars gem-name gem-version)))
 
 (defn- ensure-using-lein2 []
   (when-not lein2?
