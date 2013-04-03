@@ -47,7 +47,7 @@
      (require-gem (:gem-name options))
      (ref-set runtime (-> (.getProvider @c) .getRuntime))
 
-     (if (= (:src-type options) :haml)
+     (if (= (:gem-name options) "haml")
        (do
          (ref-set haml-engine (.runScriptlet @c "Haml::Engine"))
          (ref-set empty-options (RubyHash. @runtime)))
@@ -73,9 +73,9 @@
 
 (defn render [src-type template]
   (try
-    (let [args          (to-array [template (engine-options-for src-type)])
+    (let [args         (to-array [template (engine-options-for src-type)])
           engine-class (engine-for src-type)
-          engine        (.callMethod @c @engine-class "new" args Object)]
+          engine       (.callMethod @c @engine-class "new" args Object)]
       (.callMethod @c engine "render" String))
     (catch Exception e
       ;; ruby gem will print an error message
