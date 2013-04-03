@@ -13,10 +13,14 @@
   (with-all ends-with-extension #'futils/ends-with-extension)
   (before (with-out-str (futils/delete-directory-recursively! "spec/out")))
 
+  (defn run-plugin [task task-arg] (sh "lein" "with-profile" "plugin-example" task task-arg))
+
   (describe "haml"
+    (def haml (partial run-plugin "haml"))
+
     (context "once"
       (it "compiles the files in the correct directory"
-        (sh "lein" "haml" "once")
+        (haml "once")
 
         (let [all-files (file-seq (io/file "spec/out"))
               html-files (filter #(@ends-with-extension % "html") all-files)]
@@ -31,17 +35,17 @@
 
     (context "clean"
       (it "removes all artifacts that were created by haml task"
-        (sh "lein" "haml" "once")
+        (haml "once")
         (should (.exists (io/file "spec/out/haml")))
-        (sh "lein" "haml" "clean")
+        (haml "clean")
         (should-not (.exists (io/file "spec/out/haml"))))
 
       (it "only deletes the artifacts that were created by haml task"
-        (sh "lein" "haml" "once")
+        (haml "once")
         (should (.exists (io/file "spec/out/haml")))
         (spit "spec/out/haml/not-generated" "a non generated content")
 
-        (sh "lein" "haml" "clean")
+        (haml "clean")
 
         (should (.exists (io/file "spec/out/haml/not-generated")))
         (should-not (.exists (io/file "spec/out/haml/multiple/blah.html")))

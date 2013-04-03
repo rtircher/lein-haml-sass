@@ -108,6 +108,12 @@ To enable the hooks, add the following lein to your `project.clj` file:
         leiningen.scss]
 ```
 
+## Contribute
+
+Run tests
+
+    $ lein with-profile tests spec
+
 ## TODO
 
 * Ensure the newly downloaded gems are on the classpath after download

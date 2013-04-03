@@ -9,45 +9,50 @@
                  [org.jruby/jruby-complete "1.6.8"]
                  [com.cemerick/pomegranate "0.2.0"]]
 
-  :profiles {:dev {:dependencies [[speclj "2.5.0"]]
-                   :plugins [[speclj "2.5.0"]]
-                   :test-paths ["spec/"]
+  :profiles {:tests {:dependencies [[speclj "2.5.0"]
+                                    [org.rubygems/haml "3.1.7"]
+                                    [org.rubygems/sass "3.2.1"]]
+                     :plugins [[speclj "2.5.0"]]
+                     :test-paths ["spec/"]
+                     :repositories [["gem-jars" "http://gemjars.org/maven/"]]}
 
-                   ;; Example for adding lein haml hooks
-                   ;; :hooks [leiningen.scss leiningen.sass leiningen.haml]
+             :plugin-example {
+                              ;; Example for adding lein haml hooks
+                              ;; :hooks [leiningen.scss leiningen.sass leiningen.haml]
 
-                   ;; Example on how to use lein-haml-sass
-                   :haml {:src "spec/files"
-                          :output-directory "spec/out/haml"
-                          ;; Other options (provided are default values)
-                          :output-extension "html"
-                          ;; :auto-compile-delay 250
-                          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
-                          ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
-                          :gem-version "3.1.7"
-                          }
+                              ;; Example on how to use lein-haml-sass
 
-                   :sass {:src "spec/files"
-                          :output-directory "spec/out/sass"
-                          ;; Other options (provided are default values)
-                          ;; :output-extension css
-                          ;; :auto-compile-delay 250
-                          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
-                          :ignore-hooks [:deps] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
-                          :style :nested ;; valid: :nested, :expanded, :compact, :compressed
-                          }
+                              :haml {:src "spec/files"
+                                     :output-directory "spec/out/haml"
+                                     ;; Other options (provided are default values)
+                                     :output-extension "html"
+                                     ;; :auto-compile-delay 250
+                                     ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
+                                     ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
+                                     :gem-version "3.1.7"
+                                     }
 
-                   :scss {:src "spec/files"
-                          :output-directory "spec/out/scss"
-                          ;; Other options (provided are default values)
-                          ;; :output-extension css
-                          ;; :auto-compile-delay 250
-                          ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
-                          ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
-                          :gem-version "3.2.1"
-                          :style :nested ;; valid: :nested, :expanded, :compact, :compressed
-                          }
-                   }}
+                              :sass {:src "spec/files"
+                                     :output-directory "spec/out/sass"
+                                     ;; Other options (provided are default values)
+                                     ;; :output-extension css
+                                     ;; :auto-compile-delay 250
+                                     ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
+                                     :ignore-hooks [:deps] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
+                                     :style :nested ;; valid: :nested, :expanded, :compact, :compressed
+                                     }
+
+                              :scss {:src "spec/files"
+                                     :output-directory "spec/out/scss"
+                                     ;; Other options (provided are default values)
+                                     ;; :output-extension css
+                                     ;; :auto-compile-delay 250
+                                     ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
+                                     ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
+                                     :gem-version "3.2.1"
+                                     :style :nested ;; valid: :nested, :expanded, :compact, :compressed
+                                     }}
+                   }
 
 
   :eval-in-leiningen true
