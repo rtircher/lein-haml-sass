@@ -22,7 +22,7 @@
       (context "sass"
         (before-all
           (dosync (ref-set @@ruby-scripting-container nil))
-          (@ensure-engine-started! {:gem-name "sass"}))
+          (@ensure-engine-started! {:gem-name "sass" :src-type :sass}))
 
         (it "render the sass template correctly using sass gem"
           (let [template "
@@ -34,7 +34,7 @@
       (context "scss"
         (before-all
           (dosync (ref-set @@ruby-scripting-container nil))
-          (@ensure-engine-started! {:gem-name "sass"}))
+          (@ensure-engine-started! {:gem-name "sass" :src-type :scss}))
 
         (it "render the scss template correctly using sass gem"
           (let [template "
@@ -45,22 +45,31 @@
                      (engine/render :scss template))))))
 
     (context "with options"
-      (before
-        (dosync (ref-set @@ruby-scripting-container nil))
-        (@ensure-engine-started! {:style :compressed
-                                  :gem-name "sass"}))
+      (context "sass"
+        (before-all
+          (dosync (ref-set @@ruby-scripting-container nil))
+          (@ensure-engine-started! {:style :compressed
+                                    :gem-name "sass"
+                                    :src-type :sass}))
 
-      (it "uses the correct style to render sass"
-        (let [template "
+        (it "uses the correct style to render"
+          (let [template "
 .my-class
   display: none" ]
-          (should= ".my-class{display:none}\n"
-                   (engine/render :sass template))))
+            (should= ".my-class{display:none}\n"
+                     (engine/render :sass template)))))
 
-      (it "uses the correct style to render scss"
-        (let [template "
+      (context "scss"
+        (before-all
+          (dosync (ref-set @@ruby-scripting-container nil))
+          (@ensure-engine-started! {:style :compressed
+                                    :gem-name "sass"
+                                    :src-type :scss}))
+
+        (it "uses the correct style to render"
+          (let [template "
 .my-class {
   display: none;
 }" ]
-          (should= ".my-class{display:none}\n"
-                   (engine/render :scss template)))))))
+            (should= ".my-class{display:none}\n"
+                     (engine/render :scss template))))))))
