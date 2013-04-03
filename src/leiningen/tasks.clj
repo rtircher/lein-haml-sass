@@ -49,7 +49,7 @@
           (println (.getMessage e))
           false)))))
 
-(defn- ensure-gem-installed! [project options]
+(defn ensure-gem-installed! [options]
   (let [gem-name (:gem-name options)
         gem-version (:gem-version options)]
     (download-gem-using-gemjars gem-name gem-version)))
@@ -76,7 +76,7 @@ Refer to the README for further details.")))
        ([~'project ~'subtask & ~'args]
           (~ensure-using-lein2)
           (if-let [options# (extract-options ~src-type ~'project)]
-            (do (#'ensure-gem-installed! ~'project options#)
+            (do (#'ensure-gem-installed! options#)
                 (case ~'subtask
                   "once"  (~once  options#)
                   "auto"  (~auto  options#)
@@ -97,6 +97,6 @@ Refer to the README for further details.")))
           task-fn (task-fn-for subtask)]
       (when-not (subtask (:ignore-hooks options))
         (ensure-using-lein2)
-        (ensure-gem-installed! project options)
+        (ensure-gem-installed! options)
         (apply task (cons project args))
         (task-fn options)))))
