@@ -1,4 +1,4 @@
-(defproject lein-haml-sass "0.2.5"
+(defproject lein-haml-sass "0.2.6"
   :description "HAML/SASS/SCSS autobuilder plugin"
   :url "https://github.com/rtircher/lein-haml-sass"
   :license {:name "Eclipse Public License - v 1.0"
@@ -9,7 +9,7 @@
                  [org.jruby/jruby-complete "1.6.8"]
                  [com.cemerick/pomegranate "0.2.0"]]
 
-  :profiles {:tests {:dependencies [[speclj "2.5.0"]
+  :profiles {:dev {:dependencies [[speclj "2.5.0"]
                                     [org.rubygems/haml "3.1.7"]
                                     [org.rubygems/sass "3.2.1"]]
                      :plugins [[speclj "2.5.0"]]
