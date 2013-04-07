@@ -10,11 +10,11 @@
                  [com.cemerick/pomegranate "0.2.0"]]
 
   :profiles {:dev {:dependencies [[speclj "2.5.0"]
-                                    [org.rubygems/haml "3.1.7"]
-                                    [org.rubygems/sass "3.2.1"]]
-                     :plugins [[speclj "2.5.0"]]
-                     :test-paths ["spec/"]
-                     :repositories [["gem-jars" "http://gemjars.org/maven/"]]}
+                                  [org.rubygems/haml "3.1.7"]
+                                  [org.rubygems/sass "3.2.1"]]
+                   :plugins [[speclj "2.5.0"]]
+                   :test-paths ["spec/"]
+                   :repositories [["gem-jars" "http://gemjars.org/maven/"]]}
 
              :plugin-example {
                               ;; Example for adding lein haml hooks
@@ -56,5 +56,5 @@
 
 
   :eval-in-leiningen true
-
+  :min-lein-version "2.0.0"
   )
