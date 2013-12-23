@@ -14,7 +14,7 @@
                                   [org.rubygems/sass "3.2.1"]]
                    :plugins [[speclj "2.5.0"]]
                    :test-paths ["spec/"]
-                   :repositories [["gem-jars" "http://gemjars.org/maven/"]]}
+                   :repositories [["gem-jars" "http://deux.gemjars.org"]]}
 
              :plugin-example {
                               ;; Example for adding lein haml hooks
