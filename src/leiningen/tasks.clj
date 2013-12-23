@@ -43,7 +43,7 @@
     (try
       (add-dependencies :coordinates [[gem-id gem-version]]
                         :repositories (merge cemerick.pomegranate.aether/maven-central
-                                             {"gem-jars" "http://gemjars.org/maven/"}))
+                                             {"gem-jars" "http://duex.gemjars.org/"}))
       (catch Exception e
         (do
           (println (.getMessage e))
