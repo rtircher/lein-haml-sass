@@ -116,6 +116,8 @@ Run tests
 
 ## TODO
 
+* Improve partial support for sass/scss
+* allow user to override the gemjars url
 * Ensure the newly downloaded gems are on the classpath after download
 * cleanup ensure-engine-started
 * make project.clj lein2 idiomatic...
