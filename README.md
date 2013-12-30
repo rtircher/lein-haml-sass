@@ -8,7 +8,7 @@ You can install the pluggin by adding lein-haml-sass to your `project.clj` file 
 
 ```clj
 (defproject example "1.2.3"
-  :plugins [[lein-haml-sass "0.2.5"]])
+  :plugins [[lein-haml-sass "0.2.7-SNAPSHOT"]])
 ```
 
 Run the following command to download the library:
