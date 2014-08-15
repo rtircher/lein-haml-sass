@@ -51,8 +51,19 @@
          (ref-set rendering-engine (.runScriptlet @c "Sass::Engine"))
          (ref-set rendering-options (build-sass-options options)))))))
 
+(defn- sass-or-scss? [src-type]
+  (or (= :sass src-type) (= :scss src-type)))
+
+(defn- source-file-filter [src-type]
+  #(let [f %
+         extension-filter (extension-filter (name src-type))]
+     (and (extension-filter f)
+          (if (sass-or-scss? src-type)
+            (not (.startsWith (.getName f) "_"))
+            true))))
+
 (defn- files-from [{:keys [src src-type output-directory output-extension]}]
-  (dest-files-from (name src-type) src output-directory output-extension))
+  (dest-files-from (source-file-filter src-type) (name src-type) src output-directory output-extension))
 
 (defn render [src-type template]
   (try

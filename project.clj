@@ -11,7 +11,7 @@
 
   :profiles {:dev {:dependencies [[speclj "2.5.0"]
                                   [org.rubygems/haml "3.1.7"]
-                                  [org.rubygems/sass "3.2.1"]]
+                                  [org.rubygems/sass "3.2.9"]]
                    :plugins [[speclj "2.5.0"]]
                    :test-paths ["spec/"]
                    :repositories [["gem-jars" "http://deux.gemjars.org"]]}
@@ -49,7 +49,7 @@
                                      ;; :auto-compile-delay 250
                                      ;; :delete-output-dir true ;; -> when running lein clean it will delete the output directory if it does not contain any file
                                      ;; :ignore-hooks [:clean :compile] ;; -> if you ue the hooks, allows you to remove some hooks that you don't want to run
-                                     :gem-version "3.2.1"
+                                     :gem-version "3.2.9"
                                      :style :nested ;; valid: :nested, :expanded, :compact, :compressed
                                      }}
                    }
