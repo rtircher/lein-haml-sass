@@ -5,10 +5,10 @@
 (defn- ends-with-extension [file ext]
   (and (.isFile file) (.endsWith (.getName file) (str "." ext))))
 
-(defn- files-from [ext dir]
+(defn- files-from [dir file-filter]
   (let [f (io/file dir)
         fs (file-seq f)]
-    (filter #(ends-with-extension % ext) fs)))
+    (filter file-filter fs)))
 
 (defn- normalize-extension [ext]
   (if (or (nil? ext) (= \. (first ext)) (empty? ext))
@@ -25,10 +25,13 @@
       (str dest-dir rel-file))
     (.getPath file)))
 
-(defn dest-files-from [src-ext src-dir dest-dir dest-ext]
+(defn extension-filter [extension]
+  #(ends-with-extension % extension))
+
+(defn dest-files-from [src-filter src-ext src-dir dest-dir dest-ext]
   (map #(hash-map (keyword src-ext) (.getPath %)
                   :dest (replace-dest-dir (replace-extension % src-ext dest-ext) src-dir dest-dir))
-       (files-from src-ext src-dir)))
+       (files-from src-dir src-filter)))
 
 (defn exists [dir]
   (and dir (.exists (io/file dir))))
