@@ -63,22 +63,29 @@
       ;; ruby gem will print an error message
       (println "      -> Compilation failed\n\n" ))))
 
+(defn rebuild-file?
+  "Given a file descriptor, return true if that file needs to be rebuilt"
+  [src-type file-descriptor]
+  (let [dest-file (io/file (:dest file-descriptor))
+        src-file (io/file (src-type file-descriptor))]
+    (or (not (.exists dest-file))
+            (> (.lastModified src-file) (.lastModified dest-file)))))
+
 (defn render-all!
   ([options watch?] (render-all! options watch? false))
 
   ([{:keys [src-type auto-compile-delay] :as options} watch? force?]
      (ensure-engine-started! options)
      (loop []
-       (doseq [file-descriptor (files-from options)]
-         (let [dest-file (io/file (:dest file-descriptor))
-               src-file (io/file (src-type file-descriptor))]
-           (when (or force?
-                     (not (.exists dest-file))
-                     (> (.lastModified src-file) (.lastModified dest-file)))
-             (println (str "   [" (name src-type) "] - " (java.util.Date.) " - " src-file " -> " dest-file))
-             (io/make-parents dest-file)
-             (spit dest-file (render src-type (slurp (src-type file-descriptor)))))))
-
+       (let [descriptors (files-from options)
+             building-any? (some #(rebuild-file? src-type %) descriptors)]
+         (doseq [file-descriptor descriptors]
+           (when (or force? building-any?)
+             (let [dest-file (io/file (:dest file-descriptor))
+                   src-file (io/file (src-type file-descriptor))]
+               (println (str "   [" (name src-type) "] - " (java.util.Date.) " - " src-file " -> " dest-file))
+               (io/make-parents dest-file)
+               (spit dest-file (render src-type (slurp (src-type file-descriptor))))))))
        (when watch?
          (Thread/sleep auto-compile-delay)
          (recur)))))
