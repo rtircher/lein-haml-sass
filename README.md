@@ -57,7 +57,7 @@ Here is an example of `project.clj` with all the possible definitions.
 
 It is good to know that you only need to specify the section you plan to use.  So if you are only interested in haml just specify the `:haml` section.
 
-By default lain-haml-sass will come bundled with haml gem version 3.1.7 and sass gem version 3.2.1.  However, if you like you can specify another gem version by using the `:gem-version` key for haml, sass, or scss subtasks.  lein-haml-sass will download the appropriate gem by using `lein <subtask> deps` or `lein deps` if you have configured the hooks.
+By default lein-haml-sass will come bundled with haml gem version 3.1.7 and sass gem version 3.2.1.  However, if you like you can specify another gem version by using the `:gem-version` key for haml, sass, or scss subtasks.  lein-haml-sass will download the appropriate gem by using `lein <subtask> deps` or `lein deps` if you have configured the hooks.
 
 ## Usage
 
